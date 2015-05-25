@@ -25,7 +25,11 @@ stockArticle(self, article, amount):
 Usage:
 # Usage info of stock items
 
-articleUsage(self, article, time):
-	given a certain timeframe, returns amount of articles bought
+articleUsage(self, article, time, user=None):
+	# given a certain timeframe, returns amount of articles bought
+	If user is not None:
+		# Filter on usage by user (needs user from other module statistics to work)
+		
+emptyAlert(self):
+	# Returns articles that are almost out of stock
 
-	
