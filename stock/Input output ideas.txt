@@ -13,23 +13,23 @@ Stock:
 # general stock keeping functions
 
 getAmount(self, article):
-	input article(id), returns current article amount
+	"""input article(id), returns current article amount"""
 
 buyArticle(self, article, amount):
-	from Barman, subtracts given amount from stock
+	"""from Barman, subtracts given amount from stock"""
 	
 stockArticle(self, article, amount):
-	Add stock amount to system, probably manually, later maybe from Barman
+	"""Add stock amount to system, probably manually, later maybe from Barman"""
 
 
 Usage:
 # Usage info of stock items
 
 articleUsage(self, article, time, user=None):
-	# given a certain timeframe, returns amount of articles bought
+	"""given a certain timeframe, returns amount of articles bought"""
 	If user is not None:
 		# Filter on usage by user (needs user from other module statistics to work)
 		
 emptyAlert(self):
-	# Returns articles that are almost out of stock
+	"""Returns articles that are almost out of stock"""
 
