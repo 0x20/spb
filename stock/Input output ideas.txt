@@ -1,0 +1,31 @@
+DB:
+
+Article data
+-	Name
+-	Price
+-	Barcode
+-	amount
+
+
+FUNCTIONS:
+
+Stock:
+# general stock keeping functions
+
+getAmount(self, article):
+	input article(id), returns current article amount
+
+buyArticle(self, article, amount):
+	from Barman, subtracts given amount from stock
+	
+stockArticle(self, article, amount):
+	Add stock amount to system, probably manually, later maybe from Barman
+
+
+Usage:
+# Usage info of stock items
+
+articleUsage(self, article, time):
+	given a certain timeframe, returns amount of articles bought
+
+	
