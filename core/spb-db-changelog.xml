@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <changeSet id="1" author="jorisvanlooveren">
+        <createTable tableName="user">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="firstname" type="text"/>
+            <column name="lastname" type="text">
+                <constraints nullable="false"/>
+            </column>
+            <column name="city" type="text"/>
+            <column name="country" type="text"/>
+            <column name="member" type="boolean"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="2" author="jorisvanlooveren">
+        <createTable tableName="phonenumbers">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="user_id" type="integer" />
+            <column name="phonenumber" type="text">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cellphone" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint constraintName="fk_phonenumbers_user"
+                baseTableName="phonenumbers" baseColumnNames="user_id"
+                referencedTableName="user"   referencedColumnNames="id"
+                onDelete="RESTRICT" />
+    </changeSet>
+    <changeSet id="3" author="jorisvanlooveren">
+        <createTable tableName="badgenumbers">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="user_id" type="integer" />
+            <column name="badgenumber" type="text">
+                <constraints nullable="false"/>
+            </column>
+            <column name="own" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint constraintName="fk_badgenumbers_user"
+                baseTableName="badgenumbers" baseColumnNames="user_id"
+                referencedTableName="user"   referencedColumnNames="id"
+                onDelete="RESTRICT" />
+    </changeSet>
+    <changeSet id="4" author="jorisvanlooveren">
+        <createTable tableName="logs">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="timestamp" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="system" type="text">
+                <constraints nullable="false"/>
+            </column>
+            <column name="attribute" type="text"/>
+            <column name="message" type="text"/>
+        </createTable>
+    </changeSet>
+
+
+    <changeSet id="5" author="jorisvanlooveren">
+         <sqlFile path="testdata/mockdata.sql" />
+     </changeSet>
+
+    <changeSet id="6" author="jorisvanlooveren">
+        <addColumn tableName="user">
+            <column name="password" type="text">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet id="7" author="jorisvanlooveren">
+        <addColumn tableName="user">
+            <column name="username" type="text">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="8" author="jorisvanlooveren">
+        <createTable tableName="banktransactiontypes">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="description" type="timestamp"></column>
+        </createTable>
+        <createTable tableName="banktransactions">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="valutadatum" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="transactiondate" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="reference" type="text">
+                <constraints nullable="false"/>
+            </column>
+            <column name="transactiontype_id" type="int"/>
+            <column name="amount" type="numeric(15,5)"/>
+            <column name="currency" type="text" />
+            <column name="accountnumber" type="text" />
+            <column name="name" type="text" />
+            <column name="message" type="text" />
+        </createTable>
+        <addForeignKeyConstraint constraintName="fk_banktransactions_banktransactiontypes"
+            baseTableName="banktransactions" baseColumnNames="transactiontype_id"
+            referencedTableName="banktransactiontypes" referencedColumnNames="id"
+            onDelete="RESTRICT" />
+
+    </changeSet>
+
+
+
+</databaseChangeLog>
