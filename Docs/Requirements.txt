@@ -1,0 +1,11 @@
+The Python packagemanager PIP can install packages from a requirements.txt file. This is mostly used for deployment to IaaS systems where terminal access is unavailable.
+Maybe this is interesting for us, possibly it is overkill.
+
+Here are some links to material:
+
+https://devcenter.heroku.com/articles/python-pip
+	# Quick overview how this is used [in a IaaS]
+
+https://pip.pypa.io/en/latest/user_guide.html#requirements-files
+	# Comprehensive manual on how to use and format requirements.txt
+
