@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="groundcontrol.css" rel="stylesheet" type="text/css">
+        <link href="jquery-ui.min.css" rel="stylesheet" type="text/css">
+        <script src= "angular-1.3.15.min.js"></script>
+        <script src= "jquery-1.11.3.min.js"></script>
+        <script src= "jquery-ui.min.js"></script>
+        <script src= "groundcontrol.js"></script>
+        <script>
+            $(function() {
+                $( "#datepickerFrom" ).datepicker({ dateFormat: 'yy-mm-dd' });
+                $( "#datepickerTo" ).datepicker({ dateFormat: 'yy-mm-dd' });
+            });
+        </script>
+    </head>
+
+<body>
+
+    <div ng-app="GroundControl">
+
+      <div class="pagetitle">
+        <h2>Whitespace GroundControl</h2>
+      </div>
+
+        <!-- Login panel -->
+      <div ng-hide="loggedIn==true" ng-controller="LoginController">
+          <div style="height:100px;">&nbsp;</div>
+          <div class="login">
+            <h3>Please log in:</h3>
+            <div class="loginForm">
+            <form name="loginForm" ng-submit="login()" role="form">
+                <table>
+                    <tr>
+                        <td><label for="username">Username</label></td>
+                        <td><input type="text" name="username" id="username" ng-model="username" /></td>
+                    </tr>
+                    <tr>
+                        <td><label for="password">Password</label></td>
+                        <td><input type="password" name="password" id="password" ng-model="password" /></td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="center"><button type="submit" ng-disabled="form.$invalid || dataLoading">Login</button>
+                        <img ng-if="dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/></td>
+                    </tr>
+                </table>
+                </form>
+                </div>
+          </div>
+      </div>
+
+      <!-- Menu bar. Shown everywhere, when a user is logged in -->
+      <div ng-show="loggedIn==true" ng-controller="MenuController" class="menuBar">
+        <nav class="{{active}}" ng-click="$event.preventDefault()">
+            <a href="#" ng-click="users()" class="menuItem" ng-class="userActive">Users</a>
+            <a href="#" ng-click="logs()" class="menuItem" ng-class="logActive">Logs</a>
+            <a href="#" ng-click="test()" class="menuItem" ng-class="testActive">&lt;Test&gt;</a>
+            <a href="#" ng-click="logout()" class="menuItem">Logout</a>
+        </nav>
+      </div>
+
+      <!-- User management panel. -->
+      <div ng-show="loggedIn==true && activePanel=='users'" ng-controller="UserController">
+        <div style="width: 25%; float:left; height: 100%;">
+            <div class="sectionTitle">
+                <h3>User list&nbsp;&nbsp;<button ng-click="newUser()" style="width: 33%; float:right;">New user</button></h3>
+            </div>
+            <div class="sectionList">
+                <table class="tbl" style="width: 100%">
+                    <tr ng-repeat="user in userListData">
+                        <td><a href ng-click="selectUser(user)">{{user.firstname}} {{user.lastname}}</a></td>
+                        <td style="width: 10%"><button ng-click="deleteUser(user)">Delete</button></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div ng-show="selectedUser" style="width: 74%; float:left">
+            <div class="sectionTitle">
+                <h3>User: {{selectedUser.firstname}} {{selectedUser.lastname}}
+                <button ng-click="clearSelectionAndReload()" style="width: 15%; float:right;">Close details</button></h3>
+            </div>
+            <div class="userDetails">
+                <h4>User details</h4>
+                <form novalidate>
+                    <input type="hidden" ng-model="selectedUser.id">
+                    <table>
+                        <tr>
+                            <td>First Name:</td>
+                            <td><input type="text" ng-model="selectedUser.firstname"></td>
+                        </tr>
+                        <tr>
+                            <td>Last Name:</td>
+                            <td><input type="text" ng-model="selectedUser.lastname"></td>
+                        </tr>
+                        <tr>
+                            <td>Member:</td>
+                            <td><input type="checkbox" ng-model="selectedUser.member"></td>
+                        </tr>
+                    </table>
+                    <button ng-click="saveUserDetails()" class="userDetailsSaveButton">Save</button>
+                </form>
+            </div>
+            <div class="userDetails">
+                <h4>User's phone numbers</h4>
+                <form novalidate>
+                    <table class="tbl" style="width: 100%">
+                        <tr>
+                            <th>Phone #</th><th>Cell?</th>
+                        </tr>
+                        <tr ng-repeat="phonenumber in selectedUser.phonenumbers">
+                            <td><input type="hidden" ng-model="phonenumber.id">
+                                <input type="hidden" ng-model="phonenumber.user_id">
+                                <input type="text" ng-model="phonenumber.phonenumber"></td>
+                            <td><input type="checkbox" ng-model="phonenumber.cellphone"></td>
+                            <td style="width: 10%"><button ng-click="deletePhonenumber(phonenumber)">Delete</button></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" ng-model="newphonenumber.phonenumber"></td>
+                            <td><input type="checkbox" ng-model="newphonenumber.cellphone"></td>
+                            <td>&nbsp;</td>
+                        </tr>
+                    </table>
+                </form>
+                <button ng-click="savePhonenumbers()" class="userDetailsSaveButton">Save</button>
+            </div>
+            <div class="userDetails">
+                <h4>Login credentials</h4>
+                <form novalidate>
+                    <input type="hidden" ng-model="selectedUser.id">
+                    <table>
+                        <tr>
+                            <td>Set username:</td>
+                            <td><input type="text" ng-model="selectedUser.username"></td>
+                        </tr>
+                        <tr>
+                            <td>Set password:</td>
+                            <td><input type="password" ng-model="selectedUser.password"></td>
+                        </tr>
+                    </table>
+                </form>
+                <button ng-click="saveUsernamePassword()" class="userDetailsSaveButton">Save</button>
+            </div>
+        </div>
+      </div>
+
+      <!-- Log management panel. -->
+      <div ng-show="loggedIn==true && activePanel=='logs'" ng-controller="LogController">
+        <div style="width: 25%; float:left;">
+            <div class="sectionTitle">
+              <h3>Log filter</h3>
+            </div>
+            <div class="sectionList">
+                <form novalidate>
+                    <table>
+                        <tr>
+                            <td>From:</td>
+                            <td><input id="datepickerFrom" type="text" ng-model="fromTS" datepicker></td>
+                        </tr>
+                        <tr>
+                            <td>To:</td>
+                            <td><input id="datepickerTo" type="text" ng-model="toTS" datepicker></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" align="center"><button ng-click="getLogs()">Get logs</button></td>
+                        </tr>
+                    </table>
+                </form>
+
+            </div>
+        </div>
+        <div style="width: 74%; float:left;">
+            <div class="sectionTitle">
+                <h3>Log entries</h3>
+            </div>
+            <div class="sectionList">
+                <table class="logEntries">
+                    <tr>
+                        <th>Timestamp</th>
+                        <th>System</th>
+                        <th>Attribute</th>
+                        <th>Message</th>
+                    </tr>
+                    <tr ng-repeat="logentry in logs">
+                        <td>{{logentry.timestamp}}</td>
+                        <td>{{logentry.system}}</td>
+                        <td>{{logentry.attribute}}</td>
+                        <td>{{logentry.message}}</td>
+                    </tr>
+                </table>
+            </div>
+      </div>
+    </div>
+
+      <!-- test panel. -->
+      <div ng-show="loggedIn==true && activePanel=='test'" ng-controller="TestController">
+        <div>
+            <div class="sectionTitle">
+              <h3>Test</h3>
+              <p>
+                  This panel contains test controls; they provide "mock" input to the API from
+                  other Space systems such as gatekeeper, dooropener, etc.
+              </p>
+                <br>
+            </div>
+            <div class="sectionList">
+                <form novalidate>
+                    <table style="width: 500pt">
+                        <tr>
+                            <td>Gatekeeper:</td>
+                            <td>Phonenumber:</td>
+                            <td><input type="text" ng-model="phoneNumber"></td>
+                            <td><button ng-click="addGatekeeperLog()">Log</button></td>
+                            <td style="width: 200pt">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td colspan="5">This will trigger the API to log a gatekeeper access message. The test method will check the phone number entered against the list of allowed phone numbers. If the number is in the list, a success message is logged; otherwise, a failure message is logged.</td>
+                        </tr>
+                        <tr>
+                            <td>Dooropener:</td>
+                            <td>Badgenumber:</td>
+                            <td><input type="text" ng-model="badgeNumber"></td>
+                            <td><button ng-click="addDooropenerLog()">Log</button></td>
+                            <td style="width: 200pt">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td colspan="5">This will trigger the API to log a dooropener access message. Getting the list of valid badges from the API is not implemented yet, so this simply logs a success message.</td>
+                        </tr>
+                    </table>
+                </form>
+           </div>
+        </div>
+      </div>
+
+    </div>
+
+</body>
+</html>
