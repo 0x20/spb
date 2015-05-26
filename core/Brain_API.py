@@ -130,37 +130,37 @@ def check_password(username, password):
 # GROUNDCONTROL WEBAPP
 # Serving static files; the client runs fully within the user's browser
 
-@app.route('/groundcontrol/angular-1.3.15.min.js')
-def angular():
-    return app.send_static_file('angular-1.3.15.min.js')
+#@app.route('/groundcontrol/angular-1.3.15.min.js')
+#def angular():
+#    return app.send_static_file('angular-1.3.15.min.js')
 
-@app.route('/groundcontrol/angular.min.js.map')
-def angular_map():
-    return app.send_static_file('angular.min.js.map')
+#@app.route('/groundcontrol/angular.min.js.map')
+#def angular_map():
+#    return app.send_static_file('angular.min.js.map')
 
-@app.route('/groundcontrol/groundcontrol.html')
-def groundcontrol():
-    return app.send_static_file('groundcontrol.html')
+#@app.route('/groundcontrol/groundcontrol.html')
+#def groundcontrol():
+#    return app.send_static_file('groundcontrol.html')
 
-@app.route('/groundcontrol/groundcontrol.js')
-def groundcontrol_code():
-    return app.send_static_file('groundcontrol.js')
+#@app.route('/groundcontrol/groundcontrol.js')
+#def groundcontrol_code():
+#    return app.send_static_file('groundcontrol.js')
 
-@app.route('/groundcontrol/groundcontrol.css')
-def groundcontrol_style():
-    return app.send_static_file('groundcontrol.css')
+#@app.route('/groundcontrol/groundcontrol.css')
+#def groundcontrol_style():
+#    return app.send_static_file('groundcontrol.css')
 
-@app.route('/groundcontrol/jquery-ui.min.css')
-def groundcontrol_jquery_style():
-    return app.send_static_file('jquery-ui.min.css')
+#@app.route('/groundcontrol/jquery-ui.min.css')
+#def groundcontrol_jquery_style():
+#    return app.send_static_file('jquery-ui.min.css')
 
-@app.route('/groundcontrol/jquery-ui.min.js')
-def groundcontrol_jquery_code():
-    return app.send_static_file('jquery-ui.min.js')
+#@app.route('/groundcontrol/jquery-ui.min.js')
+#def groundcontrol_jquery_code():
+#    return app.send_static_file('jquery-ui.min.js')
 
-@app.route('/groundcontrol/jquery-1.11.3.min.js')
-def groundcontrol_jquery_min_code():
-    return app.send_static_file('jquery-1.11.3.min.js')
+#@app.route('/groundcontrol/jquery-1.11.3.min.js')
+#def groundcontrol_jquery_min_code():
+#    return app.send_static_file('jquery-1.11.3.min.js')
 
 
 if __name__ == '__main__':
