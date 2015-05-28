@@ -124,6 +124,18 @@
             onDelete="RESTRICT" />
 
     </changeSet>
+    <changeSet id="9" author="jorisvanlooveren">
+        <addColumn tableName="banktransactions">
+            <column name="message2" type="text" />
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="10" author="jorisvanlooveren">
+        <modifyDataType tableName="banktransactiontypes" columnName="description" newDataType="text" />
+     </changeSet>
+    <changeSet id="11" author="jorisvanlooveren">
+         <sqlFile path="dictionarydata/transactiontypes.sql" />
+     </changeSet>
 
 
 

@@ -1,8 +1,10 @@
 import psycopg2
 import psycopg2.extras
-import datetime
+from datetime import datetime
 import logging
 import ConfigParser
+import BankTransaction
+from decimal import Decimal
 from BrainDataStore import BrainDataStore
 
 
@@ -82,6 +84,28 @@ class PGDataStore(BrainDataStore):
             """SELECT password FROM smarterspacebrain.user WHERE username='""" + username + """'""")
         if (len(rows) == 1):
             return rows[0]['password'] == password
+
+    def save_bank_transaction(self, bank_transaction):
+        rows = self.runselect("""SELECT 1 FROM smarterspacebrain.banktransactions WHERE reference='""" +
+                                bank_transaction.reference + """'""")
+        if (len(rows) == 1):
+            self.logger.debug("Row found!")
+        else:
+            types = self.runselect("""SELECT id FROM smarterspacebrain.banktransactiontypes WHERE description='""" +
+                                    bank_transaction.type + """'""")
+            if (len(types) == 1):
+                tt_id = types[0]['id']
+                print bank_transaction.amount
+                self.runinsert("""INSERT INTO smarterspacebrain.banktransactions (valutaDatum,transactiondate,reference,transactiontype_id,amount,""" +
+                           """ currency,accountnumber,name,message,message2) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)""",
+                           [datetime.strptime(bank_transaction.valutaDatum, '%d-%m-%Y'),
+                            datetime.strptime(bank_transaction.date, '%d-%m-%Y'),
+                            bank_transaction.reference,tt_id,
+                           Decimal(bank_transaction.amount.replace('.', '').replace(',', '.')),bank_transaction.currency,
+                           bank_transaction.sourceAccount,bank_transaction.name,bank_transaction.message1,
+                           bank_transaction.message2]
+                           )
+
 
     # private helper methods
 
