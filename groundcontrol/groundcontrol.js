@@ -71,10 +71,19 @@ menuModule.controller("MenuController", function ($scope, $rootScope) {
             $scope.userActive='menuItemActive';
             delete $scope.logActive;
             delete $scope.testActive;
+            delete $scope.bankActive;
         }
         $scope.logs = function() {
             $rootScope.activePanel='logs';
             $scope.logActive='menuItemActive';
+            delete $scope.userActive;
+            delete $scope.testActive;
+            delete $scope.bankActive;
+        }
+        $scope.bank = function() {
+            $rootScope.activePanel='bank';
+            $scope.bankActive='menuItemActive';
+            delete $scope.logActive;
             delete $scope.userActive;
             delete $scope.testActive;
         }
@@ -83,6 +92,7 @@ menuModule.controller("MenuController", function ($scope, $rootScope) {
             $scope.testActive='menuItemActive';
             delete $scope.logActive;
             delete $scope.userActive;
+            delete $scope.bankActive;
         }
     });
 
@@ -213,6 +223,17 @@ logModule.controller("LogController", function ($scope, $http) {
         }
     });
 
+// TRANSACTIONS
+var bankTransactionModule = angular.module('Transaction', []);
+bankTransactionModule.controller("TransactionController", function ($scope, $http) {
+        $scope.getTransactions = function() {
+            var responsePromise = $http.get("/brain/banktransactions/from/" + $scope.tFromTS + "/to/" + $scope.tToTS);
+            responsePromise.success(function(data, status, headers, config) {
+                $scope.transactions = data.transactions;
+            });
+        }
+    });
+
 // TEST
 var testModule = angular.module('Test', []);
 testModule.controller("TestController", function ($scope, $http) {
@@ -243,5 +264,6 @@ angular.module('GroundControl', [
     'User',
     'Test',
     'Logs',
+    'Transaction',
     'directives'
 ]);

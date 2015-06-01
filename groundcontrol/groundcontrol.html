@@ -11,6 +11,8 @@
             $(function() {
                 $( "#datepickerFrom" ).datepicker({ dateFormat: 'yy-mm-dd' });
                 $( "#datepickerTo" ).datepicker({ dateFormat: 'yy-mm-dd' });
+                $( "#tDatepickerFrom" ).datepicker({ dateFormat: 'yy-mm-dd' });
+                $( "#tDatepickerTo" ).datepicker({ dateFormat: 'yy-mm-dd' });
             });
         </script>
     </head>
@@ -57,6 +59,7 @@
         <nav class="{{active}}" ng-click="$event.preventDefault()">
             <a href="#" ng-click="users()" class="menuItem" ng-class="userActive">Users</a>
             <a href="#" ng-click="logs()" class="menuItem" ng-class="logActive">Logs</a>
+            <a href="#" ng-click="bank()" class="menuItem" ng-class="bankActive">Bank</a>
             <a href="#" ng-click="test()" class="menuItem" ng-class="testActive">&lt;Test&gt;</a>
             <a href="#" ng-click="logout()" class="menuItem">Logout</a>
         </nav>
@@ -196,6 +199,61 @@
             </div>
       </div>
     </div>
+
+      <!-- Log management panel. -->
+      <div ng-show="loggedIn==true && activePanel=='bank'" ng-controller="TransactionController">
+        <div style="width: 25%; float:left;">
+            <div class="sectionTitle">
+              <h3>Transaction filter</h3>
+            </div>
+            <div class="sectionList">
+                <form novalidate>
+                    <table>
+                        <tr>
+                            <td>From:</td>
+                            <td><input id="tDatepickerFrom" type="text" ng-model="tFromTS" datepicker></td>
+                        </tr>
+                        <tr>
+                            <td>To:</td>
+                            <td><input id="tDatepickerTo" type="text" ng-model="tToTS" datepicker></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" align="center"><button ng-click="getTransactions()">Get transactions</button></td>
+                        </tr>
+                    </table>
+                </form>
+
+            </div>
+        </div>
+        <div style="width: 74%; float:left;">
+            <div class="sectionTitle">
+                <h3>Transactions</h3>
+            </div>
+            <div class="sectionList">
+                <table class="transactions">
+                    <tr>
+                        <th>Date</th>
+                        <th>Account number</th>
+                        <th>Amount / currency</th>
+                        <th>Name</th>
+                        <th>Message</th>
+                    </tr>
+                    <tr ng-repeat="transaction in transactions"
+                        ng-class='{dark : transaction.amount<0.0}'>
+                        <td style="width: 55pt;">{{transaction.valutadatum}}</td>
+                        <td style="width: 80pt;">{{transaction.accountnumber}}</td>
+                        <td>{{transaction.amount}} {{transaction.currency}}</td>
+                        <td>{{transaction.name}}</td>
+                        <td>{{transaction.message}}</td>
+                    </tr>
+                </table>
+            </div>
+      </div>
+    </div>
+
 
       <!-- test panel. -->
       <div ng-show="loggedIn==true && activePanel=='test'" ng-controller="TestController">

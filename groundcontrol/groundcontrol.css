@@ -107,3 +107,20 @@ table.logEntries tr:nth-child(even) {
   background-color: #fafafa;
 }
 
+table.transactions, table.transactions th , table.transactions td {
+  border: none;
+  border-collapse: collapse;
+  padding: 5px 15px 5px 15px;
+}
+
+table.transactions tr:nth-child(odd) {
+  background-color: #f1f1f1;
+}
+
+table.transactions tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+table.transactions tr.dark {
+  background-color: #888888;
+}

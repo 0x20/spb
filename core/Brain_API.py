@@ -1,6 +1,7 @@
 #!bin/python
 import sys
 from flask import Flask, Response, jsonify
+import simplejson
 from functools import wraps
 import urllib
 from datetime import datetime, timedelta
@@ -16,7 +17,7 @@ from PGDataStorage import PGDataStore
 # - the web app (called 'groundcontrol') is HTML/AngularJS, and all files are served as static
 #   files; 'groundcontrol' is configured as Flask's static folder
 # - the REST API is dynamic
-app = Flask(__name__, static_folder='groundcontrol', static_url_path='')
+app = Flask(__name__, static_folder='../groundcontrol', static_url_path='')
 storage = PGDataStore()
 logger = logging.getLogger('brainapi')
 
@@ -65,6 +66,19 @@ def get_logs(from_ts, to_ts):
 def store_log(system, attribute, message):
     storage.addlog(system, attribute, message)
     return "True"
+
+
+# -- TRANSACTIONS : retrieve bank transactions
+
+# - retrieve bank transactions
+@app.route("/brain/banktransactions/from/<string:from_ts>/to/<string:to_ts>", methods=['GET'])
+def get_transactions(from_ts, to_ts):
+    if ((to_ts == "undefined") or (to_ts == "")):
+        to_ts = datetime.now().strftime("%Y-%m-%d")
+    if ((from_ts == "undefined") or (from_ts == "")):
+        from_ts = (datetime.now()-timedelta(weeks=1)).strftime("%Y-%m-%d")
+    return jsonify({'transactions': storage.get_transactions(from_ts, to_ts)})
+
 
 
 # -- USER : methods for user management
@@ -130,37 +144,37 @@ def check_password(username, password):
 # GROUNDCONTROL WEBAPP
 # Serving static files; the client runs fully within the user's browser
 
-#@app.route('/groundcontrol/angular-1.3.15.min.js')
-#def angular():
-#    return app.send_static_file('angular-1.3.15.min.js')
+@app.route('/groundcontrol/angular-1.3.15.min.js')
+def angular():
+    return app.send_static_file('angular-1.3.15.min.js')
 
-#@app.route('/groundcontrol/angular.min.js.map')
-#def angular_map():
-#    return app.send_static_file('angular.min.js.map')
+@app.route('/groundcontrol/angular.min.js.map')
+def angular_map():
+    return app.send_static_file('angular.min.js.map')
 
-#@app.route('/groundcontrol/groundcontrol.html')
-#def groundcontrol():
-#    return app.send_static_file('groundcontrol.html')
+@app.route('/groundcontrol/groundcontrol.html')
+def groundcontrol():
+    return app.send_static_file('groundcontrol.html')
 
-#@app.route('/groundcontrol/groundcontrol.js')
-#def groundcontrol_code():
-#    return app.send_static_file('groundcontrol.js')
+@app.route('/groundcontrol/groundcontrol.js')
+def groundcontrol_code():
+    return app.send_static_file('groundcontrol.js')
 
-#@app.route('/groundcontrol/groundcontrol.css')
-#def groundcontrol_style():
-#    return app.send_static_file('groundcontrol.css')
+@app.route('/groundcontrol/groundcontrol.css')
+def groundcontrol_style():
+    return app.send_static_file('groundcontrol.css')
 
-#@app.route('/groundcontrol/jquery-ui.min.css')
-#def groundcontrol_jquery_style():
-#    return app.send_static_file('jquery-ui.min.css')
+@app.route('/groundcontrol/jquery-ui.min.css')
+def groundcontrol_jquery_style():
+    return app.send_static_file('jquery-ui.min.css')
 
-#@app.route('/groundcontrol/jquery-ui.min.js')
-#def groundcontrol_jquery_code():
-#    return app.send_static_file('jquery-ui.min.js')
+@app.route('/groundcontrol/jquery-ui.min.js')
+def groundcontrol_jquery_code():
+    return app.send_static_file('jquery-ui.min.js')
 
-#@app.route('/groundcontrol/jquery-1.11.3.min.js')
-#def groundcontrol_jquery_min_code():
-#    return app.send_static_file('jquery-1.11.3.min.js')
+@app.route('/groundcontrol/jquery-1.11.3.min.js')
+def groundcontrol_jquery_min_code():
+    return app.send_static_file('jquery-1.11.3.min.js')
 
 
 if __name__ == '__main__':

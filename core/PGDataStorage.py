@@ -85,6 +85,14 @@ class PGDataStore(BrainDataStore):
         if (len(rows) == 1):
             return rows[0]['password'] == password
 
+    def get_transactions(self, from_ts, to_ts):
+        rows = self.runselect("""SELECT to_char(valutadatum, 'YYYY-MM-DD') as valutadatum, amount, currency, accountnumber, name, message """ +
+                              """FROM smarterspacebrain.banktransactions """ +
+                              """WHERE '""" + from_ts + """ 00:00:00' <= valutadatum AND valutadatum <= '""" + to_ts + """ 23:59:59.999' """ +
+                              """ORDER BY valutadatum DESC""")
+        return rows
+
+
     def save_bank_transaction(self, bank_transaction):
         rows = self.runselect("""SELECT 1 FROM smarterspacebrain.banktransactions WHERE reference='""" +
                                 bank_transaction.reference + """'""")
