@@ -176,6 +176,32 @@ def groundcontrol_jquery_code():
 def groundcontrol_jquery_min_code():
     return app.send_static_file('jquery-1.11.3.min.js')
 
+@app.route('/groundcontrol/images/ui-bg_gloss-wave_35_8d8d8d_500x100.png')
+def groundcontrol_jquery_image1():
+    return app.send_static_file('images/ui-bg_gloss-wave_35_8d8d8d_500x100.png')
+
+@app.route('/groundcontrol/images/ui-icons_ffffff_256x240.png')
+def groundcontrol_jquery_image2():
+    return app.send_static_file('images/ui-icons_ffffff_256x240.png')
+
+@app.route('/groundcontrol/images/ui-bg_highlight-soft_75_5c635b_1x100.png')
+def groundcontrol_jquery_image3():
+    return app.send_static_file('images/ui-bg_highlight-soft_75_5c635b_1x100.png')
+
+@app.route('/groundcontrol/images/ui-bg_glass_100_f6f6f6_1x400.png')
+def groundcontrol_jquery_image4():
+    return app.send_static_file('images/ui-bg_glass_100_f6f6f6_1x400.png')
+
+@app.route('/groundcontrol/images/ui-icons_92908e_256x240.png')
+def groundcontrol_jquery_image5():
+    return app.send_static_file('images/ui-icons_92908e_256x240.png')
+
+@app.route('/groundcontrol/images/ui-bg_glass_100_2f2f2e_1x400.png')
+def groundcontrol_jquery_image6():
+    return app.send_static_file('images/ui-bg_glass_100_2f2f2e_1x400.png')
+
+
+
 
 if __name__ == '__main__':
     rootLogger = logging.getLogger()
