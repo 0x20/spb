@@ -11,6 +11,7 @@ Run the following commands, as root, on your Debian machine:
  apt-get install default-jre
  apt-get install unzip
  apt-get install curl
+ apt-get install git
  apt-get install python-dev
  apt-get install libpq-dev
  apt-get install python-pip
@@ -18,35 +19,28 @@ Run the following commands, as root, on your Debian machine:
  pip install virtualenv
 
 Further prepare the environment. 
-Run as yourself: 
- mkdir projects
- cd projects
- virtualenv SmarterSpaceBrain
- cd SmarterSpaceBrain
- bin/pip install flask
- bin/pip install psycopg2
- mkdir groundcontrol
- mkdir lib
- cd lib
- mkdir liquibase
- wget http://freefr.dl.sourceforge.net/project/liquibase/Liquibase%20Core/liquibase-3.3.3-bin.zip
- unzip liquibase-3.3.3-bin.zip -d liquibase-3.3.3-bin
- rm liquibase-3.3.3-bin.zip
- wget https://jdbc.postgresql.org/download/postgresql-9.4-1201.jdbc41.jar
- In SmarterSpaceBrain directory, create the following files:`
- 1. bin/run_liquibase.sh  (!! make executable)
- #!/bin/sh
- export LIQUIBASE_HOME=./lib/liquibase/liquibase-3.3.3-bin/
- lib/liquibase/liquibase-3.3.3-bin/liquibase --changeLogFile=spb-db-changelog.xml --defaultSchemaName=space_brain update
- 2. liquibase.properties  (!! edit to point to correct database server/instance)
-driver=org.postgresql.Driver
-classpath=lib/liquibase/postgresql-9.4-1201.jdbc41.jar
-url=jdbc:postgresql://172.22.32.6:5432/braindb_test?searchpath=space_brain
-username=***
-password=***
- 3. testdata/mockdata.sql
-insert into space_brain.user (id, firstname, lastname, city, country, member)
-          values (-1, ‘admin’, ‘admin’, 'Gent', 'Belgium', true);
+Run as yourself:
+ git clone https://github.com/0x20/spb    # clone the repo to recreate the dir structure locally
+ cd spb                                   # go into the newly created dir structure
+ virtualenv core                          # make 'core' into a virtual environment
+ cd core                                  # enter the virtual environment
+ source bin/activate                      # activate the virtual environment
+ pip install --upgrade pip                # update to the latest version
+ pip install flask
+ pip install psycopg2
+ pip install simplejson
+
+Edit the file liquibase.properties to point to your dev database:
+ driver=org.postgresql.Driver
+ classpath=lib/liquibase/postgresql-9.4-1201.jdbc41.jar
+ url=jdbc:postgresql://172.22.32.6:5432/braindb_test?searchpath=space_brain
+ username=***
+ password=***
+
+Edit the file main.ini if needed
+
+Edit the file devops/deploy_to_test.sh if needed
+
 
 
 
