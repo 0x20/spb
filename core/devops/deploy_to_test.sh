@@ -46,6 +46,7 @@ unzip -d $WORKING_DIR $WORKING_DIR/code.zip > /dev/null
 #---
 # Copy the files we need to the test installation
 # - the API application
+cp $WORKING_DIR/spb-master/core/application_code/*.py $TARGET_DIR/core/application_code
 cp $WORKING_DIR/spb-master/core/*.py $TARGET_DIR/core
 cp $WORKING_DIR/spb-master/core/*.xml $TARGET_DIR/core
 # - the UI application
