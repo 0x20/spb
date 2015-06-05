@@ -1,14 +1,16 @@
 #!bin/python
 import sys
 from flask import Flask, Response, jsonify
+from util import returns_text
 import simplejson
-from functools import wraps
 import urllib
 from datetime import datetime, timedelta
 import logging
 import logging.handlers
 import ConfigParser
 from PGDataStorage import PGDataStore
+from apscheduler.schedulers.background import BackgroundScheduler
+from BankTransactionLoader import csv_file_loader
 
 # The application consists of 2 parts:
 # - a REST API
@@ -22,12 +24,11 @@ storage = PGDataStore()
 logger = logging.getLogger('brainapi')
 
 
-def returns_text(f):
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        r = f(*args, **kwargs)
-        return Response(r, content_type='text/plain; charset=utf-8')
-    return decorated_function
+# monitor a directory to import CSV bank transaction dump files
+scheduler = BackgroundScheduler()
+bank_job = scheduler.add_job(csv_file_loader, 'interval', seconds=15)
+scheduler.start()
+logging.getLogger("apscheduler.executors.default").setLevel(logging.WARN)
 
 
 # BRAIN API
@@ -205,15 +206,16 @@ def groundcontrol_jquery_image6():
 
 if __name__ == '__main__':
     rootLogger = logging.getLogger()
-    rootLogger.setLevel(level=logging.DEBUG)
+    rootLogger.setLevel(level=logging.INFO)
     ch = logging.StreamHandler(sys.stdout)
-    ch.setLevel(logging.DEBUG)
+    ch.setLevel(logging.INFO)
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
     ch.setFormatter(formatter)
     rootLogger.addHandler(ch)
 
     config = ConfigParser.ConfigParser()
     config.read("main.ini")
-    app.run(debug=True,host='0.0.0.0',port=config.getint('Host','port'))
+    # using the reloader will cause apscheduler to run twice each time the interval elapses
+    app.run(debug=True,use_reloader=False,host='0.0.0.0',port=config.getint('Host','port'))
 
 
