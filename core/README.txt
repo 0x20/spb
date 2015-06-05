@@ -20,6 +20,19 @@ CORE
 POSTGRESQL
 
 Don’t forget to install PostgreSQL on your PC. Use the properties in liquifies.properties to set up your database (DB name: smarterspacebrain, schema name: smarterspacebrain, role name: smarterspacebrain (pwd spbdev). If you choose different names, make sure to update liquibase.properties accordingly.
+      on Debian:
+          sudo apt-get install postgresql
+          sudo -su postgres psql
+            CREATE USER smarterspacebrain WITH PASSWORD 'spbdev';
+            CREATE DATABASE smarterspacebrain OWNER smarterspacebrain;
+            \c smarterspacebrain
+            SET ROLE smarterspacebrain;
+            CREATE SCHEMA smarterspacebrain;
+            \q
+          now edit pg_hba.conf (/etc/postgresql/9.3/main/pg_hba.conf) and insert the line
+              "local  smarterspacebrain  smarterspacebrain  password"
+              insert it above the line "local all all peer" (!)
+          sudo service postgresql restart
 
 In order to update the database, execute:
   bin/run_liquibase.sh
