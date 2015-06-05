@@ -1,14 +1,14 @@
-import psycopg2
-import psycopg2.extras
 from datetime import datetime
 import logging
 import ConfigParser
-import BankTransaction
 from decimal import Decimal
-from BrainDataStore import BrainDataStore
+
+import psycopg2
+import psycopg2.extras
+from application_code import BrainDataStore
 
 
-class PGDataStore(BrainDataStore):
+class PGDataStore(BrainDataStore.BrainDataStore):
     # public methods
 
     def getgsmnumbers(self):

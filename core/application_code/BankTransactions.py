@@ -1,7 +1,9 @@
 #!bin/python
 import csv
-import BankTransaction
-from PGDataStorage import PGDataStore
+
+from application_code.BankTransaction import BankTransaction
+from application_code.PGDataStorage import PGDataStore
+
 
 storage = PGDataStore()
 
