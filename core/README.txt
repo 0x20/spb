@@ -19,7 +19,10 @@ CORE
 
 POSTGRESQL
 
-Don’t forget to install PostgreSQL on your PC. Use the properties in liquifies.properties to set up your database (DB name: smarterspacebrain, schema name: smarterspacebrain, role name: smarterspacebrain (pwd spbdev). If you choose different names, make sure to update liquibase.properties accordingly.
+Don’t forget to install PostgreSQL on your PC. Use the properties in liquibase.properties to set up your database (DB name: smarterspacebrain, schema name: smarterspacebrain, role name: smarterspacebrain (pwd spbdev). If you choose different names, make sure to update liquibase.properties accordingly.
+      on MacOSX:
+          The easiest way is to download Postgres.app from http://www.postgresql.org/download/macosx/
+          Alternatively, if you use fink, macports or homebrew, you can use these package managers to install postgresql
       on Debian:
           sudo apt-get install postgresql
           sudo -su postgres psql
