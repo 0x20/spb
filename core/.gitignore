@@ -3,6 +3,8 @@
 ../groundcontrol/.idea/
 README.txt~
 application_code/BankTransactionLoader.pyc
+application_code/BankTransactions.pyc
+application_code/BankTransaction.pyc
 application_code/BrainDataStore.pyc
 application_code/PGDataStorage.pyc
 application_code/__init__.pyc

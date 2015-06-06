@@ -103,7 +103,6 @@ class PGDataStore(BrainDataStore.BrainDataStore):
                                     bank_transaction.type + """'""")
             if (len(types) == 1):
                 tt_id = types[0]['id']
-                print bank_transaction.amount
                 self.runinsert("""INSERT INTO smarterspacebrain.banktransactions (valutaDatum,transactiondate,reference,transactiontype_id,amount,""" +
                            """ currency,accountnumber,name,message,message2) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)""",
                            [datetime.strptime(bank_transaction.valutaDatum, '%d-%m-%Y'),

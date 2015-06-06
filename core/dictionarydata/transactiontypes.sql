@@ -2,3 +2,4 @@ insert into smarterspacebrain.banktransactiontypes (description) values ('Oversc
 insert into smarterspacebrain.banktransactiontypes (description) values ('Uw interest berekening');
 insert into smarterspacebrain.banktransactiontypes (description) values ('Uw storting');
 insert into smarterspacebrain.banktransactiontypes (description) values ('SEPA-domiciliëring');
+insert into smarterspacebrain.banktransactiontypes (description) values ('Uw overschrijving');

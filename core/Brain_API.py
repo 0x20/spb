@@ -11,8 +11,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 
 from application_code.util import returns_text
 from application_code.PGDataStorage import PGDataStore
-from application_code.BankTransactionLoader import csv_file_loader
-
+from application_code.BankTransactionLoader import BankTransactionLoader
 
 
 # The application consists of 2 parts:
@@ -25,13 +24,6 @@ from application_code.BankTransactionLoader import csv_file_loader
 app = Flask(__name__, static_folder='../groundcontrol', static_url_path='')
 storage = PGDataStore()
 logger = logging.getLogger('brainapi')
-
-
-# monitor a directory to import CSV bank transaction dump files
-scheduler = BackgroundScheduler()
-bank_job = scheduler.add_job(csv_file_loader, 'interval', seconds=15)
-scheduler.start()
-logging.getLogger("apscheduler.executors.default").setLevel(logging.WARN)
 
 
 # BRAIN API
@@ -205,8 +197,6 @@ def groundcontrol_jquery_image6():
     return app.send_static_file('images/ui-bg_glass_100_2f2f2e_1x400.png')
 
 
-
-
 if __name__ == '__main__':
     rootLogger = logging.getLogger()
     rootLogger.setLevel(level=logging.INFO)
@@ -218,7 +208,16 @@ if __name__ == '__main__':
 
     config = ConfigParser.ConfigParser()
     config.read("main.ini")
+
+    # monitor a directory to import CSV bank transaction dump files
+    bt_loader = BankTransactionLoader(config.get('BankTransactions', 'csvpath'), config.get('BankTransactions', 'csvarchivepath'))
+    scheduler = BackgroundScheduler()
+    bank_job = scheduler.add_job(bt_loader.check_files, 'interval', seconds=15)
+    scheduler.start()
+    logging.getLogger("apscheduler.executors.default").setLevel(logging.WARN)
+
+
     # using the reloader will cause apscheduler to run twice each time the interval elapses
-    app.run(debug=True,use_reloader=False,host='0.0.0.0',port=config.getint('Host','port'))
+    app.run(debug=True, use_reloader=False, host='0.0.0.0', port=config.getint('Host', 'port'))
 
 

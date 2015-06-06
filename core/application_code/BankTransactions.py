@@ -1,20 +1,21 @@
-#!bin/python
 import csv
+import logging
 
 from application_code.BankTransaction import BankTransaction
 from application_code.PGDataStorage import PGDataStore
 
 
-storage = PGDataStore()
-
-
 class BankTransactions(object):
 
-    def read(self, fileName):
-        with open(fileName, 'rb') as csvfile:
+    def read(self, filename):
+        logger = logging.getLogger("BankTransactions")
+        logger.info("Load file: " + filename)
+        row_counter = 0
+        storage = PGDataStore()
+        with open(filename, 'rb') as csvfile:
             rowreader = csv.reader(csvfile, delimiter=';', quotechar='"')
             for row in rowreader:
-                bt = BankTransaction.BankTransaction()
+                bt = BankTransaction()
                 if (len(row) >= 9):
                     bt.valutaDatum = row[0]
                     bt.reference = row[1]
@@ -27,8 +28,6 @@ class BankTransactions(object):
                     bt.message1 = row[8]
                     bt.message2 = row[9]
                     storage.save_bank_transaction(bt)
+                    row_counter += 1
+        logger.info("Loaded %s transactions", row_counter)
 
-
-if __name__ == '__main__':
-    bt = BankTransactions()
-    bt.read('testdata/2014-12-21_20:48:35_20141009_20141216_BE15973004306430.csv')
