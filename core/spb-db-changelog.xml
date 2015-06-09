@@ -136,13 +136,5 @@
     <changeSet id="11" author="jorisvanlooveren">
          <sqlFile path="dictionarydata/transactiontypes.sql" />
      </changeSet>
-    <changeSet id="12" author="jorisvanlooveren">
-         <sqlFile path="dictionarydata/transactiontypes_2.sql" />
-     </changeSet>
-    <changeSet id="13" author="jorisvanlooveren">
-         <sqlFile path="dictionarydata/transactiontypes_3.sql" />
-     </changeSet>
-
-
 
 </databaseChangeLog>

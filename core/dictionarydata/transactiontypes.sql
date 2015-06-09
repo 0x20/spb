@@ -2,3 +2,14 @@ insert into smarterspacebrain.banktransactiontypes (description) values ('Oversc
 insert into smarterspacebrain.banktransactiontypes (description) values ('Uw interest berekening');
 insert into smarterspacebrain.banktransactiontypes (description) values ('Uw storting');
 insert into smarterspacebrain.banktransactiontypes (description) values ('SEPA-domiciliëring');
+insert into smarterspacebrain.banktransactiontypes (description) values ('Uw overschrijving');
+insert into smarterspacebrain.banktransactiontypes (description) values ('Beschrijving');
+insert into smarterspacebrain.banktransactiontypes (description) values ('Overschrijving in uw voordeel');
+insert into smarterspacebrain.banktransactiontypes (description) values ('Domiciliëring');
+insert into smarterspacebrain.banktransactiontypes (description) values ('Aankoop brandstof Bancontact');
+insert into smarterspacebrain.banktransactiontypes (description) values ('Betaling België');
+insert into smarterspacebrain.banktransactiontypes (description) values ('Betaling Bancontact');
+insert into smarterspacebrain.banktransactiontypes (description) values ('Uw afhaling');
+insert into smarterspacebrain.banktransactiontypes (description) values ('Annul. reken.');
+insert into smarterspacebrain.banktransactiontypes (description) values ('BEGIN SALDO');
+insert into smarterspacebrain.banktransactiontypes (description) values ('Opname Bancontact');
