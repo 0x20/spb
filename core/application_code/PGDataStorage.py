@@ -112,6 +112,8 @@ class PGDataStore(BrainDataStore.BrainDataStore):
                            bank_transaction.sourceAccount,bank_transaction.name,bank_transaction.message1,
                            bank_transaction.message2]
                            )
+            else:
+                self.logger.warn("Transaction type not found: %s", bank_transaction.type)
 
 
     # private helper methods
