@@ -32,9 +32,15 @@ Don’t forget to install PostgreSQL on your PC. Use the properties in liquibase
             SET ROLE smarterspacebrain;
             CREATE SCHEMA smarterspacebrain;
             \q
+          if you want postgresql to listen on other interfaces that 'localhost', edit
+              the file '/etc/postgresql/9.3/main/postgresql.conf'. Locate the line that
+              starts with 'listen_addresses' and add the required interface to the list
+              for example: listen_addresses = 'localhost,172.22.32.4'
           now edit pg_hba.conf (/etc/postgresql/9.3/main/pg_hba.conf) and insert the line
               "local  smarterspacebrain  smarterspacebrain  password"
               insert it above the line "local all all peer" (!)
+              if you want to allow access from another interface, you'll have to add additional lines:
+              "host  smarterspacebrain  smarterspacebrain  172.22.32.4/24  password"
           sudo service postgresql restart
 
 In order to update the database, execute:

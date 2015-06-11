@@ -15,7 +15,6 @@ Run the following commands, as root, on your Debian machine:
  apt-get install python-dev
  apt-get install libpq-dev
  apt-get install python-pip
- apt-get install python-psycopg2
  pip install virtualenv
 
 Further prepare the environment. 
@@ -29,6 +28,7 @@ Run as yourself:
  pip install flask
  pip install psycopg2
  pip install simplejson
+ pip install apscheduler
 
 Edit the file liquibase.properties to point to your dev database:
  driver=org.postgresql.Driver
