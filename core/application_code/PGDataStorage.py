@@ -38,7 +38,7 @@ class PGDataStore(BrainDataStore.BrainDataStore):
     def addlog(self, system, attr, msg):
         self.runinsert(
             """INSERT INTO smarterspacebrain.logs (timestamp, system, attribute, message) VALUES (%s, %s, %s, %s)""",
-            (datetime.datetime.now(), system, attr, msg))
+            (datetime.now(), system, attr, msg))
 
     def getusers(self):
         rows = self.runselect(
