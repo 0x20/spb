@@ -22,7 +22,7 @@ class BankTransactionLoader(object):
         full_name = self.path + '/' + filename
         full_new_name = self.archivepath + '/' + filename
         self.logger.info("Loading bank CSV file [" + full_name + "]")
-        self.logger.info("Archiving to [" + full_name + "]")
+        self.logger.info("Archiving to [" + full_new_name + "]")
         # Move transaction file to archive
         rename(full_name, full_new_name)
         # Load transactions into database
