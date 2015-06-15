@@ -5,7 +5,7 @@ CORE
   This will turn "core" into a virtualenv, to which you can add packages.
 - activate the "core" virtualenv:
   source bin/activate
-- in "core", install flask and simplejson:
+- in "core", install flask and simplejson apscheduler:
   pip install flask simplejson
 - in "core", install psycopg2:
   pip install psycopg2
