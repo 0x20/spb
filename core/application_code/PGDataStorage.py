@@ -21,7 +21,7 @@ class PGDataStore(BrainDataStore.BrainDataStore):
 
     def getphonenumbers(self, user_id):
         rows = self.runselect(
-            """SELECT pn.id, pn.user_id, pn.phonenumber, pn.cellphone FROM smarterspacebrain.phonenumbers pn WHERE pn.user_id=""" + user_id)
+            """SELECT pn.id, pn.user_id, pn.phonenumber, pn.cellphone FROM smarterspacebrain.phonenumbers pn WHERE pn.user_id=%s""",(user_id,))
         return rows
 
     def getbadgenumbers(self):
@@ -32,7 +32,7 @@ class PGDataStore(BrainDataStore.BrainDataStore):
 
     def get_logs(self, from_ts, to_ts):
         rows = self.runselect("""SELECT to_char(timestamp, 'YYYY-MM-DD HH24:MI:SS') as timestamp, system, attribute, message FROM smarterspacebrain.logs """ +
-                              """WHERE '""" + from_ts + """ 00:00:00' <= timestamp AND timestamp <= '""" + to_ts + """ 23:59:59.999' ORDER BY timestamp DESC""")
+                """WHERE %s <= timestamp AND timestamp <= %s ORDER BY timestamp DESC""", (from_ts+" 00:00:00", to_ts+" 23:59:59.999"))
         return rows
 
     def addlog(self, system, attr, msg):
@@ -81,26 +81,24 @@ class PGDataStore(BrainDataStore.BrainDataStore):
 
     def login(self, username, password):
         rows = self.runselect(
-            """SELECT password FROM smarterspacebrain.user WHERE username='""" + username + """'""")
+            """SELECT password FROM smarterspacebrain.user WHERE username=%s""", (username,))
         if (len(rows) == 1):
             return rows[0]['password'] == password
 
     def get_transactions(self, from_ts, to_ts):
         rows = self.runselect("""SELECT to_char(valutadatum, 'YYYY-MM-DD') as valutadatum, amount, currency, accountnumber, name, message """ +
                               """FROM smarterspacebrain.banktransactions """ +
-                              """WHERE '""" + from_ts + """ 00:00:00' <= valutadatum AND valutadatum <= '""" + to_ts + """ 23:59:59.999' """ +
-                              """ORDER BY valutadatum DESC""")
+                              """WHERE %s <= valutadatum AND valutadatum <= %s """ +
+                              """ORDER BY valutadatum DESC""", (from_ts + " 00:00:00", to_ts + " 23:59:59.999"))
         return rows
 
 
     def save_bank_transaction(self, bank_transaction):
-        rows = self.runselect("""SELECT 1 FROM smarterspacebrain.banktransactions WHERE reference='""" +
-                                bank_transaction.reference + """'""")
+        rows = self.runselect("""SELECT 1 FROM smarterspacebrain.banktransactions WHERE reference='%s'""", (bank_transaction.reference,))
         if (len(rows) == 1):
             self.logger.debug("Row found!")
         else:
-            types = self.runselect("""SELECT id FROM smarterspacebrain.banktransactiontypes WHERE description='""" +
-                                    bank_transaction.type + """'""")
+            types = self.runselect("""SELECT id FROM smarterspacebrain.banktransactiontypes WHERE description='%s'""", (bank_transaction.type))
             if (len(types) == 1):
                 tt_id = types[0]['id']
                 self.runinsert("""INSERT INTO smarterspacebrain.banktransactions (valutaDatum,transactiondate,reference,transactiontype_id,amount,""" +
@@ -133,14 +131,14 @@ class PGDataStore(BrainDataStore.BrainDataStore):
             'DatabaseConfig', 'user') + "' password='" + config.get('DatabaseConfig', 'password') + "'"
         self.logger.debug("Connection string: %s", self.conn_string)
 
-    def runselect(self, query):
+    def runselect(self, query, values = None):
         rows = []
         try:
             self.logger.debug("Select query [%s]", query)
             conn = psycopg2.connect(self.conn_string)
             #cur = conn.cursor(cursor_factory=psycopg2.extras.NamedTupleCursor)
             cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-            cur.execute(query)
+            cur.execute(query, values)
             rows = cur.fetchall()
         except StandardError as e:
             print e.message
