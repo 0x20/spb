@@ -140,6 +140,18 @@ def check_password(username, password):
 # GROUNDCONTROL WEBAPP
 # Serving static files; the client runs fully within the user's browser
 
+@app.route('/groundcontrol')
+def default():
+    return groundcontrol()
+
+@app.route('/groundcontrol/')
+def default2():
+    return groundcontrol()
+
+@app.route('/groundcontrol/index.html')
+def default_index():
+    return groundcontrol()
+
 @app.route('/groundcontrol/angular-1.3.15.min.js')
 def angular():
     return app.send_static_file('angular-1.3.15.min.js')
