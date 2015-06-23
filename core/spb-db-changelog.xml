@@ -5,6 +5,9 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
 
+    <changeSet id="0" author="jorisvanlooveren">
+        <tagDatabase tag="emptyDatabase"/>
+    </changeSet>
     <changeSet id="1" author="jorisvanlooveren">
         <createTable tableName="user">
             <column name="id" type="int" autoIncrement="true">
@@ -71,9 +74,18 @@
         </createTable>
     </changeSet>
 
+    <changeSet id="4a" author="jorisvanlooveren">
+        <tagDatabase tag="testVersion1"/>
+    </changeSet>
+
 
     <changeSet id="5" author="jorisvanlooveren">
          <sqlFile path="testdata/mockdata.sql" />
+         <rollback>
+             <sql>delete from smarterspacebrain.badgenumbers</sql>
+             <sql>delete from smarterspacebrain.phonenumbers</sql>
+             <sql>delete from smarterspacebrain.user</sql>
+         </rollback>
      </changeSet>
 
     <changeSet id="6" author="jorisvanlooveren">
@@ -132,9 +144,15 @@
 
     <changeSet id="10" author="jorisvanlooveren">
         <modifyDataType tableName="banktransactiontypes" columnName="description" newDataType="text" />
+        <rollback>
+            <modifyDataType tableName="banktransactiontypes" columnName="description" newDataType="timestamp" />
+        </rollback>
      </changeSet>
     <changeSet id="11" author="jorisvanlooveren">
          <sqlFile path="dictionarydata/transactiontypes.sql" />
+         <rollback>
+             <sql>delete from smarterspacebrain.banktransactiontypes</sql>
+         </rollback>
      </changeSet>
 
 </databaseChangeLog>
