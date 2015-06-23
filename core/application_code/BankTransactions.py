@@ -27,7 +27,7 @@ class BankTransactions(object):
                 if ((len(row) >= 9) and self.is_date(row[0])):
                     bt.valutaDatum = row[0]
                     bt.reference = row[1]
-                    bt.type = row[2].decode("latin_1")
+                    bt.type = row[2]  #.decode("latin_1")
                     bt.amount = row[3]
                     bt.currency = row[4]
                     bt.date = row[5]
@@ -38,6 +38,6 @@ class BankTransactions(object):
                     storage.save_bank_transaction(bt)
                     row_counter += 1
                 else:
-                    logger.warn("Invalid line")
+                    logger.warn("Invalid line (header?)")
         logger.info("Loaded %s transactions", row_counter)
 

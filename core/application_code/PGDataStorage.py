@@ -92,20 +92,22 @@ class PGDataStore(BrainDataStore.BrainDataStore):
                               """ORDER BY valutadatum DESC""", (from_ts + " 00:00:00", to_ts + " 23:59:59.999"))
         return rows
 
+    def get_transaction_types(self, type_description):
+        return self.runselect("""SELECT id FROM smarterspacebrain.banktransactiontypes WHERE description=%s""", [type_description])
 
     def save_bank_transaction(self, bank_transaction):
-        rows = self.runselect("""SELECT 1 FROM smarterspacebrain.banktransactions WHERE reference='%s'""", (bank_transaction.reference,))
+        rows = self.runselect("""SELECT 1 FROM smarterspacebrain.banktransactions WHERE reference=%s""", [bank_transaction.reference])
         if (len(rows) == 1):
             self.logger.debug("Row found!")
         else:
-            types = self.runselect("""SELECT id FROM smarterspacebrain.banktransactiontypes WHERE description='%s'""", (bank_transaction.type))
+            types = self.get_transaction_types(bank_transaction.type)
             if (len(types) == 1):
                 tt_id = types[0]['id']
                 self.runinsert("""INSERT INTO smarterspacebrain.banktransactions (valutaDatum,transactiondate,reference,transactiontype_id,amount,""" +
                            """ currency,accountnumber,name,message,message2) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)""",
                            [datetime.strptime(bank_transaction.valutaDatum, '%d-%m-%Y'),
                             datetime.strptime(bank_transaction.date, '%d-%m-%Y'),
-                            bank_transaction.reference,tt_id,
+                            bank_transaction.reference, tt_id,
                            Decimal(bank_transaction.amount.replace('.', '').replace(',', '.')),bank_transaction.currency,
                            bank_transaction.sourceAccount,bank_transaction.name,bank_transaction.message1,
                            bank_transaction.message2]
