@@ -95,12 +95,19 @@ class PGDataStore(BrainDataStore.BrainDataStore):
     def get_transaction_types(self, type_description):
         return self.runselect("""SELECT id FROM smarterspacebrain.banktransactiontypes WHERE description=%s""", [type_description])
 
+    def add_transaction_type(self, type_description):
+        self.runinsert("""INSERT INTO smarterspacebrain.banktransactiontypes (description) VALUES (%s)""", [type_description])
+        self.logger.info("New bank transaction type: %s", type_description)
+        return self.get_transaction_types(type_description)   # return the newly created ID
+
     def save_bank_transaction(self, bank_transaction):
         rows = self.runselect("""SELECT 1 FROM smarterspacebrain.banktransactions WHERE reference=%s""", [bank_transaction.reference])
         if (len(rows) == 1):
             self.logger.debug("Row found!")
         else:
             types = self.get_transaction_types(bank_transaction.type)
+            if (len(types) == 0):
+                types = self.add_transaction_type(bank_transaction.type)
             if (len(types) == 1):
                 tt_id = types[0]['id']
                 self.runinsert("""INSERT INTO smarterspacebrain.banktransactions (valutaDatum,transactiondate,reference,transactiontype_id,amount,""" +
@@ -108,9 +115,9 @@ class PGDataStore(BrainDataStore.BrainDataStore):
                            [datetime.strptime(bank_transaction.valutaDatum, '%d-%m-%Y'),
                             datetime.strptime(bank_transaction.date, '%d-%m-%Y'),
                             bank_transaction.reference, tt_id,
-                           Decimal(bank_transaction.amount.replace('.', '').replace(',', '.')),bank_transaction.currency,
-                           bank_transaction.sourceAccount,bank_transaction.name,bank_transaction.message1,
-                           bank_transaction.message2]
+                            Decimal(bank_transaction.amount.replace('.', '').replace(',', '.')), bank_transaction.currency,
+                            bank_transaction.sourceAccount, bank_transaction.name, bank_transaction.message1,
+                            bank_transaction.message2]
                            )
             else:
                 self.logger.warn("Transaction type not found: %s", bank_transaction.type)
