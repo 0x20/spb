@@ -86,10 +86,10 @@ class PGDataStore(BrainDataStore.BrainDataStore):
             return rows[0]['password'] == password
 
     def get_transactions(self, from_ts, to_ts):
-        rows = self.runselect("""SELECT to_char(valutadatum, 'YYYY-MM-DD') as valutadatum, amount, currency, accountnumber, name, message """ +
-                              """FROM smarterspacebrain.banktransactions """ +
-                              """WHERE %s <= valutadatum AND valutadatum <= %s """ +
-                              """ORDER BY valutadatum DESC""", (from_ts + " 00:00:00", to_ts + " 23:59:59.999"))
+        rows = self.runselect("""SELECT to_char(bt.valutadatum, 'YYYY-MM-DD') as valutadatum, bt.amount, bt.currency, bt.accountnumber, bt.name, bt.message, an.user_id as userid """ +
+                              """FROM smarterspacebrain.banktransactions bt LEFT OUTER JOIN smarterspacebrain.accountnumbers an ON an.accountnumber = bt.accountnumber """ +
+                              """WHERE %s <= bt.valutadatum AND bt.valutadatum <= %s """ +
+                              """ORDER BY bt.valutadatum DESC""", (from_ts + " 00:00:00", to_ts + " 23:59:59.999"))
         return rows
 
     def get_transaction_types(self, type_description):

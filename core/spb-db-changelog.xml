@@ -155,4 +155,18 @@
          </rollback>
      </changeSet>
 
+    <changeSet id="12" author="jorisvanlooveren">
+        <createTable tableName="accountnumbers">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="user_id" type="integer" />
+            <column name="accountnumber" type="text" />
+        </createTable>
+        <addForeignKeyConstraint constraintName="fk_accountnumbers_user"
+                baseTableName="accountnumbers" baseColumnNames="user_id"
+                referencedTableName="user"   referencedColumnNames="id"
+                onDelete="RESTRICT" />
+     </changeSet>
+
 </databaseChangeLog>
