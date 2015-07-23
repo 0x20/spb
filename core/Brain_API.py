@@ -166,6 +166,14 @@ def angular():
 def angular_map():
     return app.send_static_file('angular.min.js.map')
 
+@app.route('/groundcontrol/ngDialog.min.js')
+def ngDialog_js():
+    return app.send_static_file('ngDialog.min.js')
+
+@app.route('/groundcontrol/ngDialog.min.css')
+def ngDialog_css():
+    return app.send_static_file('ngDialog.min.css')
+
 @app.route('/groundcontrol/groundcontrol.html')
 def groundcontrol():
     return app.send_static_file('groundcontrol.html')
