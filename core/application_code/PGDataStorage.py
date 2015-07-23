@@ -122,6 +122,10 @@ class PGDataStore(BrainDataStore.BrainDataStore):
             else:
                 self.logger.warn("Transaction type not found: %s", bank_transaction.type)
 
+    def get_gatekeeper_schedules(self):
+        return self.runselect("""SELECT id, day, starttime, endtime FROM smarterspacebrain.gatekeeperschedules""", [])
+
+
 
     # private helper methods
 

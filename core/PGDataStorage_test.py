@@ -19,5 +19,13 @@ def add_type_test():
     print(types[0]['id'])
 
 
+def find_schedules_test():
+    print("-=-=- find_schedules_test -=-=-")
+    schedules = s.get_gatekeeper_schedules()
+    for schedule in schedules:
+        print('- %s %s %s %s' %(schedule['id'],schedule['day'],schedule['starttime'],schedule['endtime']))
+
+
 find_type_test()
-add_type_test()
+#add_type_test()
+find_schedules_test()

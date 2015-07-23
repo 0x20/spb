@@ -169,4 +169,15 @@
                 onDelete="RESTRICT" />
      </changeSet>
 
+    <changeSet id="13" author="jorisvanlooveren">
+        <createTable tableName="gatekeeperschedules">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="day" type="text" />
+            <column name="starttime" type="text" />
+            <column name="endtime" type="text" />
+        </createTable>
+     </changeSet>
+
 </databaseChangeLog>

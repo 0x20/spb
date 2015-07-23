@@ -63,6 +63,7 @@
             <a href="#" ng-click="users()" class="menuItem" ng-class="userActive">Users</a>
             <a href="#" ng-click="logs()" class="menuItem" ng-class="logActive">Logs</a>
             <a href="#" ng-click="bank()" class="menuItem" ng-class="bankActive">Bank</a>
+            <a href="#" ng-click="gatekeeper()" class="menuItem" ng-class="gatekeeperActive">Gatekeeper</a>
             <a href="#" ng-click="test()" class="menuItem" ng-class="testActive">&lt;Test&gt;</a>
             <a href="#" ng-click="logout()" class="menuItem">Logout</a>
         </nav>
@@ -259,6 +260,29 @@
       </div>
     </div>
 
+
+      <!-- test panel. -->
+      <div ng-show="loggedIn==true && activePanel=='gatekeeper'" ng-controller="GatekeeperController">
+        <div>
+            <div class="sectionTitle">
+              <h3>Schedules</h3>
+            </div>
+            <div class="sectionList">
+                <table class="transactions">
+                    <tr>
+                        <th>Day</th>
+                        <th>From</th>
+                        <th>To</th>
+                    </tr>
+                    <tr ng-repeat="schedule in schedules">
+                        <td>{{schedule.day}}</td>
+                        <td>{{schedule.starttime}}</td>
+                        <td>{{schedule.endtime}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+      </div>
 
       <!-- test panel. -->
       <div ng-show="loggedIn==true && activePanel=='test'" ng-controller="TestController">

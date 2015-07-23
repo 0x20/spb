@@ -37,6 +37,12 @@ def get_all_gsmnumbers():
     logger.info("** Returning list of GSM numbers")
     return '\n'.join(storage.getgsmnumbers())
 
+# - list of GSM numbers that are allowed to use Gatekeeper
+@app.route('/brain/access/schedules/all', methods=['GET'])
+def get_all_schedules():
+    logger.info("** Returning list of gatekeeper schedules")
+    return jsonify({'schedules': storage.get_gatekeeper_schedules()})
+
 
 # - list of badges that are allowed to use open the Space door
 @app.route('/brain/access/badgenumbers/all', methods=['GET'])

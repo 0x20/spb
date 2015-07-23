@@ -27,3 +27,4 @@ pip-selfcheck.json
 testdata/2014-12-21_20:48:35_20141009_20141216_BE15973004306430.csv.orig
 ../groundcontrol/.idea/
 local/
+testdata/whitelist

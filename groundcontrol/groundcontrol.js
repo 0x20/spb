@@ -72,6 +72,7 @@ menuModule.controller("MenuController", function ($scope, $rootScope) {
             delete $scope.logActive;
             delete $scope.testActive;
             delete $scope.bankActive;
+            delete $scope.gatekeeperActive;
         }
         $scope.logs = function() {
             $rootScope.activePanel='logs';
@@ -79,12 +80,22 @@ menuModule.controller("MenuController", function ($scope, $rootScope) {
             delete $scope.userActive;
             delete $scope.testActive;
             delete $scope.bankActive;
+            delete $scope.gatekeeperActive;
         }
         $scope.bank = function() {
             $rootScope.activePanel='bank';
             $scope.bankActive='menuItemActive';
             delete $scope.logActive;
             delete $scope.userActive;
+            delete $scope.gatekeeperActive;
+            delete $scope.testActive;
+        }
+        $scope.gatekeeper = function() {
+            $rootScope.activePanel='gatekeeper';
+            $scope.gatekeeperActive='menuItemActive';
+            delete $scope.logActive;
+            delete $scope.userActive;
+            delete $scope.bankActive;
             delete $scope.testActive;
         }
         $scope.test = function() {
@@ -93,6 +104,7 @@ menuModule.controller("MenuController", function ($scope, $rootScope) {
             delete $scope.logActive;
             delete $scope.userActive;
             delete $scope.bankActive;
+            delete $scope.gatekeeperActive;
         }
     });
 
@@ -155,8 +167,9 @@ userModule.controller("UserController", function($scope, $http) {
             });
             responsePromise.error(function(data, status, headers, config) {
                 alert("Could not save user!");
-                $scope.clearSelectionAndReload();
+                $scope.clearSelection();
             });
+            $scope.loadUserList();
             $http.get("/brain/logs/add/groundcontrol/none/Update user " + $scope.selectedUser.id + " (" +
                       $scope.selectedUser.firstname + " " + $scope.selectedUser.lastname +")");
 
@@ -234,6 +247,18 @@ bankTransactionModule.controller("TransactionController", function ($scope, $htt
         }
     });
 
+// GATEKEEPER
+var gatekeeperModule = angular.module('Gatekeeper', []);
+gatekeeperModule.controller("GatekeeperController", function ($scope, $http) {
+        $scope.modifySchedule = function() {
+            var responsePromise = $http.get("/brain/access/schedules/all");
+            responsePromise.success(function(data, status, headers, config) {
+                $scope.schedules = data.schedules;
+            });
+        }
+        $scope.modifySchedule();
+    });
+
 // TEST
 var testModule = angular.module('Test', []);
 testModule.controller("TestController", function ($scope, $http) {
@@ -265,5 +290,6 @@ angular.module('GroundControl', [
     'Test',
     'Logs',
     'Transaction',
+    'Gatekeeper',
     'directives'
 ]);
