@@ -43,6 +43,12 @@ def get_all_schedules():
     logger.info("** Returning list of gatekeeper schedules")
     return jsonify({'schedules': storage.get_gatekeeper_schedules()})
 
+@app.route('/brain/access/whitelistfile', methods=['GET'])
+@returns_text
+def get_whitelist():
+    logger.info("** Returning gatekeeper whitelist")
+    return '\n'.join(storage.get_gatekeeper_whitelist())
+
 
 # - list of badges that are allowed to use open the Space door
 @app.route('/brain/access/badgenumbers/all', methods=['GET'])
