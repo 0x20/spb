@@ -179,5 +179,71 @@
             <column name="endtime" type="text" />
         </createTable>
      </changeSet>
+     
+    <changeSet id="14" author="erwinkaats">
+        <createTable tableName="product">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="text">
+                <constraints nullable="false"/>
+            </column>
+            <column name="amount" type="integer">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cost" type="integer">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+    </changeSet>
+    
+    <changeSet id="15" author="erwinkaats">
+        <createTable tableName="producthistorytype">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="type" type="text">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="text">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    
+    <changeSet id="16" author="erwinkaats">
+        <createTable tableName="producthistory">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="product_id" type="integer">
+                <constraints nullable="false"/>
+            </column>
+            <column name="type_id" type="integer">
+                <constraints nullable="false"/>
+            </column>
+            <column name="changeamount" type="integer">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="integer">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint constraintName="fk_producthistory_user"
+                baseTableName="producthistory" baseColumnNames="user_id"
+                referencedTableName="user"   referencedColumnNames="id"
+                onDelete="RESTRICT" />
+        <addForeignKeyConstraint constraintName="fk_producthistorytype"
+                baseTableName="producthistory" baseColumnNames="type_id"
+                referencedTableName="producthistorytype"   referencedColumnNames="id"
+                onDelete="RESTRICT" />
+        <addForeignKeyConstraint constraintName="fk_product"
+                baseTableName="producthistory" baseColumnNames="product_id"
+                referencedTableName="product"   referencedColumnNames="id"
+                onDelete="RESTRICT" />
+    </changeSet>
+    
+    
 
 </databaseChangeLog>
