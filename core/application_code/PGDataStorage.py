@@ -138,6 +138,13 @@ class PGDataStore(BrainDataStore.BrainDataStore):
             lines.append('%s %s %s' % (phonenumber, phoneno['firstname'], phoneno['lastname']))
         return lines
 
+    # Stock management functions
+    def getproducts(self, user_id):
+        rows = self.runselect(
+            # TODO: change query in something original
+             """SELECT pn.id, pn.user_id, pn.phonenumber, pn.cellphone FROM smarterspacebrain.phonenumbers pn WHERE pn.user_id=%s""",(user_id,))
+        return rows
+
     # private helper methods
 
     conn_string = ""
