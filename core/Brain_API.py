@@ -87,7 +87,13 @@ def get_transactions(from_ts, to_ts):
         from_ts = (datetime.now()-timedelta(weeks=1)).strftime("%Y-%m-%d")
     return jsonify({'transactions': storage.get_transactions(from_ts, to_ts)})
 
+# -- PAYMENT : Manages payments from users
 
+# - add a banknote and process member payments
+@app.route("/brain/payments/addbanknote")
+def addbanknote():
+    print "woah"
+    pass
 
 # -- USER : methods for user management
 

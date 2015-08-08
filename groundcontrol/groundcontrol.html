@@ -204,7 +204,7 @@
       </div>
     </div>
 
-      <!-- Log management panel. -->
+      <!-- Bank management panel. -->
       <div ng-show="loggedIn==true && activePanel=='bank'" ng-controller="TransactionController">
         <div style="width: 25%; float:left;">
             <div class="sectionTitle">
@@ -229,7 +229,28 @@
                         </tr>
                     </table>
                 </form>
-
+            </div>
+            <div class="sectionTitle">
+              <h3>Member payments</h3>
+            </div>
+            <div class="sectionList">
+                <form novalidate>
+                    <table>
+                        <tr>
+                            <td>Upload a CSV file with transactions</td>
+                        </tr>
+                        <tr>
+                            
+                            <td><input id="tMemberPaymentsFile" type="file"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" align="center"><button ng-click="uploadPayment()">Upload payment transactions</button></td>
+                        </tr>
+                    </table>
+                </form>
             </div>
         </div>
         <div style="width: 74%; float:left;">

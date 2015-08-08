@@ -3,7 +3,7 @@ __author__ = 'erwin'
 # This file houses some member payment logic
 disc = ["Lidgeld", "MemberFee", "lidgeld", "memberfee"]
 
-def getpayment(banknote):
+def addbanknote(banknote):
 
     '''
     his function imports a banknote. Needs to be reworked to fit the specific
@@ -83,4 +83,4 @@ banknote = [
     ["1-1-2015", "Erwin", "30","Lidgeld Erwin"],
     ["1-1-2015", "Bart", "20","Lidgeld Bart"]
 ]
-getpayment(banknote)
+addbanknote(banknote)

@@ -245,6 +245,12 @@ bankTransactionModule.controller("TransactionController", function ($scope, $htt
                 $scope.transactions = data.transactions;
             });
         }
+        $scope.uploadPayment = function() {
+            var responsePromise = $http.post("/brain/payments/addbanknote");
+            responsePromise.success(function(data, status, headers, config) {
+                $scope.transactions = data.transactions;
+            });
+        }
     });
 
 // GATEKEEPER
