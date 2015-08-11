@@ -155,6 +155,14 @@ def check_password(username, password):
     else:
         return "False"
 
+# -- Stock management
+
+# - list of products currently offered
+@app.route('/brain/stock/products/all', methods=['GET'])
+def get_all_products():
+    logger.info("** Returning list of current products")
+    return '\n'.join(storage.getproducts())
+
 
 
 # GROUNDCONTROL WEBAPP
