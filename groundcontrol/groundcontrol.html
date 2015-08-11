@@ -281,12 +281,13 @@
                         <td style="width: 10%"><button ng-click="deleteSchedule(schedule)">Delete</button></td>
                     </tr>
                     <tr>
-                        <td><input type="text" ng-model="newschedule.day" size="1"></td>
-                        <td><input type="text" ng-model="newschedule.starttime" size="5"></td>
-                        <td><input type="text" ng-model="newschedule.endtime" size="5"></td>
+                        <td><input type="text" ng-model="newSchedule.day" size="1"></td>
+                        <td><input type="text" ng-model="newSchedule.starttime" size="5"></td>
+                        <td><input type="text" ng-model="newSchedule.endtime" size="5"></td>
                         <td>&nbsp;</td>
                     </tr>
                 </table>
+                <input type="hidden" ng-model="newSchedule.id" value="-1">
                 <button ng-click="saveSchedules()">Save</button>
             </div>
         </div>

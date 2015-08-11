@@ -250,6 +250,9 @@ bankTransactionModule.controller("TransactionController", function ($scope, $htt
 // GATEKEEPER
 var gatekeeperModule = angular.module('Gatekeeper', []);
 gatekeeperModule.controller("GatekeeperController", function ($scope, $http) {
+        $scope.newSchedule = function() {
+            $scope.newSchedule = {};
+        }
         $scope.modifySchedule = function() {
             var responsePromise = $http.get("/brain/access/schedules/all");
             responsePromise.success(function(data, status, headers, config) {
@@ -263,7 +266,18 @@ gatekeeperModule.controller("GatekeeperController", function ($scope, $http) {
            });
         }
         $scope.saveSchedules = function() {
-            alert("new schedule " + $scope.newschedule);
+            if (($scope.newSchedule != undefined) &&
+                ($scope.newSchedule.day != "") &&
+                ($scope.newSchedule.starttime != "") &&
+                ($scope.newSchedule.endtime != "")) {
+               $http.get("/brain/access/schedules/add/" +
+                        $scope.newSchedule.day + "/" +
+                        $scope.newSchedule.starttime + "/" +
+                        $scope.newSchedule.endtime);
+
+                        delete $scope.newSchedule;
+                        $scope.modifySchedule();
+            }
         }
         $scope.modifySchedule();
     });

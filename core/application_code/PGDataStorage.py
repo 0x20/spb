@@ -123,10 +123,14 @@ class PGDataStore(BrainDataStore.BrainDataStore):
                 self.logger.warn("Transaction type not found: %s", bank_transaction.type)
 
     def get_gatekeeper_schedules(self):
-        return self.runselect("""SELECT id, day, starttime, endtime FROM smarterspacebrain.gatekeeperschedules""", [])
+        return self.runselect("""SELECT id, day, starttime, endtime FROM smarterspacebrain.gatekeeperschedules ORDER BY day, starttime""", [])
 
     def delete_schedule(self, id):
         self.runinsert("""DELETE FROM smarterspacebrain.gatekeeperschedules WHERE id=%s""", [id])
+
+    def add_schedule(self, day, from_ts, to_ts):
+        self.logger.debug("new schedule (%s, %s, %s)", [day, from_ts, to_ts])
+        self.runinsert("""INSERT INTO smarterspacebrain.gatekeeperschedules (day, starttime, endtime) VALUES (%s, %s, %s)""", [day, from_ts, to_ts])
 
     def get_gatekeeper_whitelist(self):
         schedules = self.runselect("""SELECT id, day, starttime, endtime FROM smarterspacebrain.gatekeeperschedules""", [])
@@ -140,6 +144,7 @@ class PGDataStore(BrainDataStore.BrainDataStore):
                 phonenumber = phonenumber.replace("0", "32", 1)
             lines.append('%s %s %s' % (phonenumber, phoneno['firstname'], phoneno['lastname']))
         return lines
+
 
     # Stock management functions
     def getproducts(self, user_id):
