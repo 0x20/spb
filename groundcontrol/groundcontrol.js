@@ -256,6 +256,15 @@ gatekeeperModule.controller("GatekeeperController", function ($scope, $http) {
                 $scope.schedules = data.schedules;
             });
         }
+        $scope.deleteSchedule = function(item) {
+           var responsePromise = $http.get("/brain/access/schedules/delete/" + item.id);
+           responsePromise.success(function(data, status, headers, config) {
+                $scope.modifySchedule();
+           });
+        }
+        $scope.saveSchedules = function() {
+            alert("new schedule " + $scope.newschedule);
+        }
         $scope.modifySchedule();
     });
 

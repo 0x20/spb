@@ -125,6 +125,9 @@ class PGDataStore(BrainDataStore.BrainDataStore):
     def get_gatekeeper_schedules(self):
         return self.runselect("""SELECT id, day, starttime, endtime FROM smarterspacebrain.gatekeeperschedules""", [])
 
+    def delete_schedule(self, id):
+        self.runinsert("""DELETE FROM smarterspacebrain.gatekeeperschedules WHERE id=%s""", [id])
+
     def get_gatekeeper_whitelist(self):
         schedules = self.runselect("""SELECT id, day, starttime, endtime FROM smarterspacebrain.gatekeeperschedules""", [])
         phonenos = self.runselect("""SELECT pn.phonenumber, u.firstname, u.lastname FROM smarterspacebrain.phonenumbers pn, smarterspacebrain.user u WHERE pn.user_id=u.id AND pn.cellphone='TRUE' AND u.member=true""")
