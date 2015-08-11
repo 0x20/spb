@@ -133,7 +133,7 @@ class PGDataStore(BrainDataStore.BrainDataStore):
         self.runinsert("""INSERT INTO smarterspacebrain.gatekeeperschedules (day, starttime, endtime) VALUES (%s, %s, %s)""", [day, from_ts, to_ts])
 
     def get_gatekeeper_whitelist(self):
-        schedules = self.runselect("""SELECT id, day, starttime, endtime FROM smarterspacebrain.gatekeeperschedules""", [])
+        schedules = self.get_gatekeeper_schedules()
         phonenos = self.runselect("""SELECT pn.phonenumber, u.firstname, u.lastname FROM smarterspacebrain.phonenumbers pn, smarterspacebrain.user u WHERE pn.user_id=u.id AND pn.cellphone='TRUE' AND u.member=true""")
         lines = []
         for schedule in schedules:
