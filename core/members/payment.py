@@ -1,4 +1,5 @@
 __author__ = 'erwin'
+from core.application_code import PGDataStorage
 
 # This file houses some member payment logic
 disc = ["Lidgeld", "MemberFee", "lidgeld", "memberfee"]
@@ -43,8 +44,6 @@ def addbanktransaction(row):
             if disc in 'line.description':
                 pass
         # add line to DB
-
-
 
 
 class Member:
