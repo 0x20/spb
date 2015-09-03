@@ -43,6 +43,20 @@ def get_all_schedules():
     logger.info("** Returning list of gatekeeper schedules")
     return jsonify({'schedules': storage.get_gatekeeper_schedules()})
 
+
+@app.route('/brain/access/schedules/delete/<int:id>')
+def delete_schedule(id):
+    storage.delete_schedule(id)
+    return "True"
+
+
+@app.route('/brain/access/schedules/add/<string:day>/<string:from_ts>/<string:to_ts>')
+def add_schedule(day, from_ts, to_ts):
+    storage.add_schedule(day, from_ts, to_ts)
+    return "True"
+
+
+
 @app.route('/brain/access/whitelistfile', methods=['GET'])
 @returns_text
 def get_whitelist():

@@ -290,14 +290,14 @@
     </div>
 
 
-      <!-- test panel. -->
+      <!-- Gatekeeper panel. -->
       <div ng-show="loggedIn==true && activePanel=='gatekeeper'" ng-controller="GatekeeperController">
         <div>
             <div class="sectionTitle">
               <h3>Schedules</h3>
             </div>
-            <div class="sectionList">
-                <table class="transactions">
+            <div class="sectionList" style="width:300px">
+                <table>
                     <tr>
                         <th>Day</th>
                         <th>From</th>
@@ -307,8 +307,17 @@
                         <td>{{schedule.day}}</td>
                         <td>{{schedule.starttime}}</td>
                         <td>{{schedule.endtime}}</td>
+                        <td style="width: 10%"><button ng-click="deleteSchedule(schedule)">Delete</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" ng-model="newSchedule.day" size="1"></td>
+                        <td><input type="text" ng-model="newSchedule.starttime" size="5"></td>
+                        <td><input type="text" ng-model="newSchedule.endtime" size="5"></td>
+                        <td>&nbsp;</td>
                     </tr>
                 </table>
+                <input type="hidden" ng-model="newSchedule.id" value="-1">
+                <button ng-click="saveSchedules()">Save</button>
             </div>
         </div>
       </div>

@@ -282,11 +282,34 @@ paymentModule.controller('PaymentUploadController', ['$scope', 'Upload', functio
 // GATEKEEPER
 var gatekeeperModule = angular.module('Gatekeeper', []);
 gatekeeperModule.controller("GatekeeperController", function ($scope, $http) {
+        $scope.newSchedule = function() {
+            $scope.newSchedule = {};
+        }
         $scope.modifySchedule = function() {
             var responsePromise = $http.get("/brain/access/schedules/all");
             responsePromise.success(function(data, status, headers, config) {
                 $scope.schedules = data.schedules;
             });
+        }
+        $scope.deleteSchedule = function(item) {
+           var responsePromise = $http.get("/brain/access/schedules/delete/" + item.id);
+           responsePromise.success(function(data, status, headers, config) {
+                $scope.modifySchedule();
+           });
+        }
+        $scope.saveSchedules = function() {
+            if (($scope.newSchedule != undefined) &&
+                ($scope.newSchedule.day != "") &&
+                ($scope.newSchedule.starttime != "") &&
+                ($scope.newSchedule.endtime != "")) {
+               $http.get("/brain/access/schedules/add/" +
+                        $scope.newSchedule.day + "/" +
+                        $scope.newSchedule.starttime + "/" +
+                        $scope.newSchedule.endtime);
+
+                        delete $scope.newSchedule;
+                        $scope.modifySchedule();
+            }
         }
         $scope.modifySchedule();
     });
