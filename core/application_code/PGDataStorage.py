@@ -145,6 +145,12 @@ class PGDataStore(BrainDataStore.BrainDataStore):
             lines.append('%s %s %s' % (phonenumber, phoneno['firstname'], phoneno['lastname']))
         return lines
 
+    def get_user_by_payment(self, paymentString):
+        rows = self.runselect("""SELECT id, firstname, lastname, memberType
+        FROM smarterspacebrain.user WHERE paymentString is %s """, (paymentString))
+        return rows
+
+
 
     # Stock management functions
     def getproducts(self, user_id):

@@ -243,6 +243,12 @@
                 referencedTableName="product"   referencedColumnNames="id"
                 onDelete="RESTRICT" />
     </changeSet>
+    <changeSet id="17" author="erwinkaats">
+        <addColumn tableName="user">
+            <column name="paymentString" type="text" />
+            <column name="memberType" type="text" />
+        </addColumn>
+    </changeSet>
     
     
 

@@ -1,8 +1,10 @@
 __author__ = 'erwin'
-from core.application_code import PGDataStorage
+import core.application_code.PGDataStorage as ds
 
 # This file houses some member payment logic
 disc = ["Lidgeld", "MemberFee", "lidgeld", "memberfee"]
+
+
 
 def addbanknote(banknote):
 
@@ -19,7 +21,7 @@ def addbanknote(banknote):
         name = row[1] # TODO: needs to be sanitized
         amount = row[2]
         description = row[3] # TODO: needs to be sanitized
-        member = Member(13) # TODO: Get user from DB, maybe ask for member nr in description?
+        member = Member("+++730/0003/00086+++") # TODO: Get user from DB, maybe ask for member nr in description?
 
 
         for d in disc:
@@ -51,8 +53,10 @@ class Member:
     A class to control member payments, is probably partly redundant after
     connecting it to the database and Flask.
     """
-    def __init__(self, id):
+    def __init__(self, paymentString):
         # TODO all placeholders, should be linked to DB later on
+
+        row = ds.PGDataStore().get_user_by_payment(paymentString)
 
         self.id = id
         self.name = "Erwin"
