@@ -24,7 +24,7 @@ class GatekeeperSchedules(models.Model):
     starttime = models.TimeField()
     endtime = models.TimeField()
 
-class Phonenumbers:
+class Phonenumbers(models.Model):
 
     user = models.ForeignKey(SpaceUser)
     phonenumber = models.TextField()

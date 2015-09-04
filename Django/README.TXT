@@ -3,7 +3,7 @@ Quick Django tutorial.
 Installing:
 
 To install Djano, just do:
-  PIP install Django
+  pip install -r requirements.txt
 
 Within the Django folder you find a directory for each module and some files in the main dir. In "manage.py" you can edit the global settings, as well as adding new modules (either own or third party). This is also the script you need to run and has some extra functionalities:
 
