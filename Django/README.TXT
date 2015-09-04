@@ -20,5 +20,6 @@ Each module can be added to the panel by creating an admin.py file in the module
 
 There are some differences between Flask and Django that make learning Django a bit harder from the start but will be easier to use later on. Luckily we already have some work done in Flask which I ported over to Django.
 
-TODO:
-Change user accounts (https://docs.djangoproject.com/en/1.8/ref/contrib/auth/#django.contrib.auth.models.User)
+There is some great documentation around, with https://docs.djangoproject.com/en/1.8/ being the starting point for most questions.
+
+In short, Django provides everything from data mangement in the model layer to presentation in the view layer. On top of that, you can use templates (HTML, JS and what not) and forms (can be automatically build from the model fields or customized).
