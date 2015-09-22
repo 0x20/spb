@@ -1,6 +1,6 @@
 #!bin/python
 
-from application_code.PGDataStorage import PGDataStore
+from code.database.PGDataStorage import PGDataStore
 
 s = PGDataStore()
 

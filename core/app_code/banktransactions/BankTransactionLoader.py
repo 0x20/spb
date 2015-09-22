@@ -1,6 +1,7 @@
 import logging
 from os import walk, rename
-from BankTransactions import BankTransactions
+
+from app_code.banktransactions import BankTransactions
 
 
 class BankTransactionLoader(object):

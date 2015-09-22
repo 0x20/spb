@@ -1,7 +1,7 @@
 
 from flask import Blueprint
 
-groundcontrol_app = Blueprint('groundcontrol', __name__, static_folder='../../groundcontrol', static_url_path='')
+groundcontrol_app = Blueprint('groundcontrol', __name__, static_folder='../../../groundcontrol', static_url_path='')
 
 # GROUNDCONTROL WEBAPP
 # Serving static files; the client runs fully within the user's browser

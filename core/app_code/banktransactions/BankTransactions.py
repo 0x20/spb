@@ -1,9 +1,9 @@
 import csv
 import logging
-
 from datetime import datetime
-from BankTransaction import BankTransaction
-from PGDataStorage import PGDataStore
+
+from app_code.banktransactions import BankTransaction
+from app_code.database.PGDataStorage import PGDataStore
 
 
 class BankTransactions(object):

@@ -2,10 +2,10 @@ from datetime import datetime
 import logging
 import ConfigParser
 from decimal import Decimal
-import BrainDataStore
+
+from app_code.database import BrainDataStore
 import psycopg2
 import psycopg2.extras
-
 
 
 class PGDataStore(BrainDataStore.BrainDataStore):
