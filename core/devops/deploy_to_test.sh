@@ -44,7 +44,13 @@ unzip -d $WORKING_DIR $WORKING_DIR/code.zip > /dev/null
 #unzip -d $WORKING_DIR -j $WORKING_DIR/code.zip SmarterSpaceBrain.git/*.ini SmarterSpaceBrain.git/testdata/*.sql > /dev/null
 #---
 # Copy the files to the test installation
-cp $WORKING_DIR/spb-master/core/*.py $TARGET_DIR/core
+cp $WORKING_DIR/spb-master/core/*.py $TARGET_DIR/core/
+cp $WORKING_DIR/spb-master/core/app_code/*.py $TARGET_DIR/core/app_code
+cp $WORKING_DIR/spb-master/core/app_code/banktransactions/*.py $TARGET_DIR/core/app_code/banktransactions
+cp $WORKING_DIR/spb-master/core/app_code/brain/*.py $TARGET_DIR/core/app_code/brain
+cp $WORKING_DIR/spb-master/core/app_code/database/*.py $TARGET_DIR/core/app_code/database
+cp $WORKING_DIR/spb-master/core/app_code/members/*.py $TARGET_DIR/core/app_code/members
+cp $WORKING_DIR/spb-master/core/app_code/ui/*.py $TARGET_DIR/core/app_code/ui
 cp $WORKING_DIR/spb-master/core/*.xml $TARGET_DIR/core
 cp $WORKING_DIR/spb-master/core/dictionarydata/*.sql $TARGET_DIR/core/dictionarydata
 cp $WORKING_DIR/spb-master/core/application_code/*.py $TARGET_DIR/core/application_code
@@ -57,8 +63,7 @@ cp $WORKING_DIR/spb-master/groundcontrol/*.map $TARGET_DIR/groundcontrol
 #cp $WORKING_DIR/spb-master/core/testdata/*.sql $TARGET_DIR/core/testdata/
 #---
 # Delete the files
-rm -rf $WORKING_DIR/spb-master/*
-rmdir $WORKING_DIR/spb-master
+rm -rf $WORKING_DIR/spb-master
 #--- Following lines commented out: don't overwrite test config
 # rm $WORKING_DIR/*.ini $WORKING_DIR/*.sql
 #---
