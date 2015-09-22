@@ -9,9 +9,10 @@ import ConfigParser
 from flask import Flask, jsonify
 from apscheduler.schedulers.background import BackgroundScheduler
 
+from ui import load_groundcontrol
+
 from application_code.util import returns_text
-from application_code.PGDataStorage import PGDataStore
-from application_code.BankTransactionLoader import BankTransactionLoader
+from application_code import PGDataStorage, BankTransactionLoader
 
 
 # The application consists of 2 parts:
@@ -22,9 +23,11 @@ from application_code.BankTransactionLoader import BankTransactionLoader
 #   files; 'groundcontrol' is configured as Flask's static folder
 # - the REST API is dynamic
 app = Flask(__name__, static_folder='../groundcontrol', static_url_path='')
-storage = PGDataStore()
+storage = PGDataStorage.PGDataStore()
 logger = logging.getLogger('brainapi')
 
+
+app.register_blueprint(load_groundcontrol.groundcontrol_app)
 
 # BRAIN API
 
@@ -177,84 +180,6 @@ def get_all_products():
 
 
 
-# GROUNDCONTROL WEBAPP
-# Serving static files; the client runs fully within the user's browser
-
-@app.route('/groundcontrol')
-def default():
-    return groundcontrol()
-
-@app.route('/groundcontrol/')
-def default2():
-    return groundcontrol()
-
-@app.route('/groundcontrol/index.html')
-def default_index():
-    return groundcontrol()
-
-@app.route('/groundcontrol/angular-1.3.15.min.js')
-def angular():
-    return app.send_static_file('angular-1.3.15.min.js')
-
-@app.route('/groundcontrol/angular.min.js.map')
-def angular_map():
-    return app.send_static_file('angular.min.js.map')
-
-@app.route('/groundcontrol/ngDialog.min.js')
-def ngDialog_js():
-    return app.send_static_file('ngDialog.min.js')
-
-@app.route('/groundcontrol/ngDialog.min.css')
-def ngDialog_css():
-    return app.send_static_file('ngDialog.min.css')
-
-@app.route('/groundcontrol/groundcontrol.html')
-def groundcontrol():
-    return app.send_static_file('groundcontrol.html')
-
-@app.route('/groundcontrol/groundcontrol.js')
-def groundcontrol_code():
-    return app.send_static_file('groundcontrol.js')
-
-@app.route('/groundcontrol/groundcontrol.css')
-def groundcontrol_style():
-    return app.send_static_file('groundcontrol.css')
-
-@app.route('/groundcontrol/jquery-ui.min.css')
-def groundcontrol_jquery_style():
-    return app.send_static_file('jquery-ui.min.css')
-
-@app.route('/groundcontrol/jquery-ui.min.js')
-def groundcontrol_jquery_code():
-    return app.send_static_file('jquery-ui.min.js')
-
-@app.route('/groundcontrol/jquery-1.11.3.min.js')
-def groundcontrol_jquery_min_code():
-    return app.send_static_file('jquery-1.11.3.min.js')
-
-@app.route('/groundcontrol/images/ui-bg_gloss-wave_35_8d8d8d_500x100.png')
-def groundcontrol_jquery_image1():
-    return app.send_static_file('images/ui-bg_gloss-wave_35_8d8d8d_500x100.png')
-
-@app.route('/groundcontrol/images/ui-icons_ffffff_256x240.png')
-def groundcontrol_jquery_image2():
-    return app.send_static_file('images/ui-icons_ffffff_256x240.png')
-
-@app.route('/groundcontrol/images/ui-bg_highlight-soft_75_5c635b_1x100.png')
-def groundcontrol_jquery_image3():
-    return app.send_static_file('images/ui-bg_highlight-soft_75_5c635b_1x100.png')
-
-@app.route('/groundcontrol/images/ui-bg_glass_100_f6f6f6_1x400.png')
-def groundcontrol_jquery_image4():
-    return app.send_static_file('images/ui-bg_glass_100_f6f6f6_1x400.png')
-
-@app.route('/groundcontrol/images/ui-icons_92908e_256x240.png')
-def groundcontrol_jquery_image5():
-    return app.send_static_file('images/ui-icons_92908e_256x240.png')
-
-@app.route('/groundcontrol/images/ui-bg_glass_100_2f2f2e_1x400.png')
-def groundcontrol_jquery_image6():
-    return app.send_static_file('images/ui-bg_glass_100_2f2f2e_1x400.png')
 
 
 if __name__ == '__main__':
@@ -270,7 +195,7 @@ if __name__ == '__main__':
     config.read("main.ini")
 
     # monitor a directory to import CSV bank transaction dump files
-    bt_loader = BankTransactionLoader(config.get('BankTransactions', 'csvpath'), config.get('BankTransactions', 'csvarchivepath'))
+    bt_loader = BankTransactionLoader.BankTransactionLoader(config.get('BankTransactions', 'csvpath'), config.get('BankTransactions', 'csvarchivepath'))
     scheduler = BackgroundScheduler()
     bank_job = scheduler.add_job(bt_loader.check_files, 'interval', seconds=15)
     scheduler.start()

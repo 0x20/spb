@@ -255,7 +255,7 @@ bankTransactionModule.controller("TransactionController", function ($scope, $htt
 
 // Payment
 //inject directives and services.
-var paymentModule = angular.module('Payment', ['ngFileUpload']);
+/*var paymentModule = angular.module('Payment', ['ngFileUpload']);
 
 paymentModule.controller('PaymentUploadController', ['$scope', 'Upload', function ($scope, Upload) {
     $scope.$watch('file', function (file) {
@@ -275,7 +275,7 @@ paymentModule.controller('PaymentUploadController', ['$scope', 'Upload', functio
             console.log('error status: ' + status);
         })
     };
-}]);
+}]);*/
       
         
 
@@ -345,7 +345,7 @@ angular.module('GroundControl', [
     'Test',
     'Logs',
     'Transaction',
-    'Payment',
+    //'Payment',
     'Gatekeeper',
     'directives'
 ]);
