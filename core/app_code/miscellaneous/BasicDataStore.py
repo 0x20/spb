@@ -1,17 +1,14 @@
 from datetime import datetime
 import logging
 import ConfigParser
-
 import psycopg2
 import psycopg2.extras
 
-
+# BasicDataStore is a base class that implements a couple of common database access methods for all
+# modules:
+# - run a SELECT query (which returns an array of rows)
+# - run an INSERT/UPDATE/DELETE query (which returns nothing)
 class BasicDataStore(object):
-
-    def get_user_by_payment(self, paymentString):
-        rows = self.runselect("""SELECT id, firstname, lastname, memberType
-        FROM smarterspacebrain.user WHERE paymentString is %s """, (paymentString))
-        return rows
 
     conn_string = ""
     logger = None

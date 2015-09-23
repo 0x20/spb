@@ -1,9 +1,9 @@
 
 import logging
 from flask import Blueprint, jsonify
-from app_code.database import BasicDataStore
+from app_code.miscellaneous.PaymentDataStore import PaymentDataStore
 
-storage = BasicDataStore.BasicDataStore()
+storage = PaymentDataStore()
 logger = logging.getLogger('payment_api')
 
 payment_module = Blueprint('payment', __name__)
