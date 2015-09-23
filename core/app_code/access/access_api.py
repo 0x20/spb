@@ -24,26 +24,21 @@ def get_all_schedules():
     logger.info("** Returning list of gatekeeper schedules")
     return jsonify({'schedules': storage.get_gatekeeper_schedules()})
 
-
 @access_module.route('/brain/access/schedules/delete/<int:id>')
 def delete_schedule(id):
     storage.delete_schedule(id)
     return "True"
-
 
 @access_module.route('/brain/access/schedules/add/<string:day>/<string:from_ts>/<string:to_ts>')
 def add_schedule(day, from_ts, to_ts):
     storage.add_schedule(day, from_ts, to_ts)
     return "True"
 
-
-
 @access_module.route('/brain/access/whitelistfile', methods=['GET'])
 @returns_text
 def get_whitelist():
     logger.info("** Returning gatekeeper whitelist")
     return '\n'.join(storage.get_gatekeeper_whitelist())
-
 
 # - list of badges that are allowed to use open the Space door
 @access_module.route('/brain/access/badgenumbers/all', methods=['GET'])

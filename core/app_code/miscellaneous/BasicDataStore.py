@@ -8,6 +8,7 @@ import psycopg2.extras
 # modules:
 # - run a SELECT query (which returns an array of rows)
 # - run an INSERT/UPDATE/DELETE query (which returns nothing)
+#
 class BasicDataStore(object):
 
     conn_string = ""
@@ -19,10 +20,7 @@ class BasicDataStore(object):
         # Read database access configuration from file 'main.ini'
         config = ConfigParser.ConfigParser()
         config.read("main.ini")
-        self.conn_string = "host='" + config.get('DatabaseConfig', 'host') + "' dbname='" + config.get('DatabaseConfig',
-                                                                                                       'dbname') + "' " \
-                                                                                                                   "user='" + config.get(
-            'DatabaseConfig', 'user') + "' password='" + config.get('DatabaseConfig', 'password') + "'"
+        self.conn_string = "host='" + config.get('DatabaseConfig', 'host') + "' dbname='" + config.get('DatabaseConfig', 'dbname') + "' user='" + config.get('DatabaseConfig', 'user') + "' password='" + config.get('DatabaseConfig', 'password') + "'"
         self.logger.debug("Connection string: %s", self.conn_string)
 
     def runselect(self, query, values = None):
