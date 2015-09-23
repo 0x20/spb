@@ -2,9 +2,9 @@
 
 import logging
 from flask import Blueprint, jsonify
-from app_code.database import PGDataStorage
+from app_code.miscellaneous.LoginDataStore import LoginDataStore
 
-storage = PGDataStorage.PGDataStore()
+storage = LoginDataStore()
 logger = logging.getLogger('login_api')
 
 login_module = Blueprint('login', __name__)

@@ -3,9 +3,9 @@
 import logging
 from flask import Blueprint, jsonify
 from app_code.util import returns_text
-from app_code.database import PGDataStorage
+from AccessDataStore import AccessDataStore
 
-storage = PGDataStorage.PGDataStore()
+storage = AccessDataStore()
 logger = logging.getLogger('access_api')
 
 access_module = Blueprint('access', __name__)

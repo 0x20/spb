@@ -1,5 +1,5 @@
 __author__ = 'erwin'
-import core.application_code.PGDataStorage as ds
+import app_code.miscellaneous.BasicDataStore as ds
 
 # This file houses some member payment logic
 disc = ["Lidgeld", "MemberFee", "lidgeld", "memberfee"]

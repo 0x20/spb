@@ -3,9 +3,9 @@
 import logging
 from flask import Blueprint, jsonify
 from datetime import datetime, timedelta
-from app_code.database import PGDataStorage
+from app_code.banktransactions.BankTransactionDataStore import BankTransactionDataStore
 
-storage = PGDataStorage.PGDataStore()
+storage = BankTransactionDataStore()
 logger = logging.getLogger('transactions_api')
 
 transactions_module = Blueprint('transactions', __name__)

@@ -3,7 +3,7 @@ import logging
 from datetime import datetime
 
 from app_code.banktransactions import BankTransaction
-from app_code.database.PGDataStorage import PGDataStore
+import BankTransactionDataStore
 
 
 class BankTransactions(object):
@@ -19,7 +19,7 @@ class BankTransactions(object):
         logger = logging.getLogger("BankTransactions")
         logger.info("Load file: " + filename)
         row_counter = 0
-        storage = PGDataStore()
+        storage = BankTransactionDataStore()
         with open(filename, 'rb') as csvfile:
             rowreader = csv.reader(csvfile, delimiter=';', quotechar='"',)
             for row in rowreader:

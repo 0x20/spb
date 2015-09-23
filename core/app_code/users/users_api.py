@@ -3,9 +3,9 @@
 import logging
 import urllib
 from flask import Blueprint, jsonify
-from app_code.database import PGDataStorage
+from app_code.users.UsersDataStore import UsersDataStore
 
-storage = PGDataStorage.PGDataStore()
+storage = UsersDataStore()
 logger = logging.getLogger('users_api')
 
 users_module = Blueprint('users', __name__)

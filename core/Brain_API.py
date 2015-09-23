@@ -1,24 +1,20 @@
 #!bin/python
 import sys
-import urllib
-from datetime import datetime, timedelta
 import logging
 import logging.handlers
 import ConfigParser
 
-from flask import Flask, jsonify
+from flask import Flask
 from apscheduler.schedulers.background import BackgroundScheduler
 from app_code.ui import load_groundcontrol
-from app_code.brain.access_api import access_module
-from app_code.brain.log_api import log_module
-from app_code.brain.login_api import login_module
-from app_code.brain.transactions_api import transactions_module
-from app_code.brain.users_api import users_module
-from app_code.brain.stock_api import stock_module
-from app_code.brain.payment_api import payment_module
+from app_code.access.Access_api import access_module
+from app_code.logs.Log_api import log_module
+from app_code.miscellaneous.Login_api import login_module
+from app_code.banktransactions.BankTransactions_api import transactions_module
+from app_code.users.Users_api import users_module
+from app_code.stock.Stock_api import stock_module
+#from app_code.miscellaneous.payment_api import payment_module
 from app_code.banktransactions import BankTransactionLoader
-from app_code.database import PGDataStorage
-
 
 
 # The application consists of 2 parts:
@@ -29,9 +25,8 @@ from app_code.database import PGDataStorage
 #   files; 'groundcontrol' is configured as Flask's static folder
 # - the REST API is dynamic
 app = Flask(__name__, static_folder='../groundcontrol', static_url_path='')
-storage = PGDataStorage.PGDataStore()
-logger = logging.getLogger('brainapi')
 
+logger = logging.getLogger('brainapi')
 
 # Attach Flask blueprints for Brain API modules
 app.register_blueprint(access_module)
@@ -40,11 +35,9 @@ app.register_blueprint(login_module)
 app.register_blueprint(transactions_module)
 app.register_blueprint(users_module)
 app.register_blueprint(stock_module)
-app.register_blueprint(payment_module)
+#app.register_blueprint(payment_module)
 # Attach Flask blueprint that loads static GroundControl UI app files
 app.register_blueprint(load_groundcontrol.groundcontrol_app)
-
-
 
 if __name__ == '__main__':
     rootLogger = logging.getLogger()

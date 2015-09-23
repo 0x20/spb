@@ -1,9 +1,9 @@
 
 import logging
 from flask import Blueprint, jsonify
-from app_code.database import PGDataStorage
+from app_code.stock.StockDataStore import StockDataStore
 
-storage = PGDataStorage.PGDataStore()
+storage = StockDataStore()
 logger = logging.getLogger('stock_api')
 
 stock_module = Blueprint('stock', __name__)

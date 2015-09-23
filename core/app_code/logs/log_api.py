@@ -3,9 +3,9 @@
 import logging
 from datetime import datetime, timedelta
 from flask import Blueprint, jsonify
-from app_code.database import PGDataStorage
+from app_code.logs.LogDataStore import LogDataStore
 
-storage = PGDataStorage.PGDataStore()
+storage = LogDataStore()
 logger = logging.getLogger('log_api')
 
 log_module = Blueprint('logs', __name__)
