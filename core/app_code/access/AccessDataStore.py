@@ -1,5 +1,6 @@
 from app_code.miscellaneous.BasicDataStore import BasicDataStore
 
+
 # Inherit actual database connection code from BasicDataStore
 class AccessDataStore(BasicDataStore):
 
