@@ -2,8 +2,8 @@ import csv
 import logging
 from datetime import datetime
 
-from app_code.banktransactions import BankTransaction
-import BankTransactionDataStore
+from app_code.banktransactions.BankTransaction import BankTransaction
+from app_code.banktransactions.BankTransactionDataStore import BankTransactionDataStore
 
 
 class BankTransactions(object):
