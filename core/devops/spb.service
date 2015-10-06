@@ -1,0 +1,16 @@
+# This file should be saved as /lib/systemd/system/spb.service
+# It will make the SPB known as a service to systemd
+# running 'systemctl enable spb' will configure it to run when the server is booted
+#
+# In order for this to work, all references to main.ini (in Brain_API.py and BasicDataStore.py)
+# should be made absolute.
+
+[Unit]
+Description=SmarterSpaceBrain
+
+[Service]
+ExecStart=/bin/bash -c '/home/spb/spb/core/bin/python /home/spb/spb/core/Brain_API.py > /home/spb/workdir/spb_logs.txt'
+User=spb
+
+[Install]
+WantedBy=multi-user.target
