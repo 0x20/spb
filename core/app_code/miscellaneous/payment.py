@@ -1,11 +1,34 @@
 __author__ = 'erwin'
-import app_code.miscellaneous.BasicDataStore as ds
+# import app_code.miscellaneous.BasicDataStore as ds
 
 # This file houses some member payment logic
 disc = ["Lidgeld", "MemberFee", "lidgeld", "memberfee"]
 
+# https://nl.wikipedia.org/wiki/Genormaliseerd_rekeningstelsel/bijlage#Klasse_7._Opbrengsten
 
+def getIBAN(member_id, action):
+    '''
+    Generate IBAN(?) code for person depending on action
 
+    '''
+
+    # select
+    if action == "subscription":
+        act_nr = 705 # 700-707 = omzet
+    elif action == "topup":
+        act_nr = 431 # promessen
+    else:
+        act_nr = 407 # Dubieuze debiteuren
+
+    mod = int(str(act_nr) + str(member_id) + "1337") % 97
+
+    code = "%d/%d/1337/%d" % (act_nr, member_id, mod)
+
+    print code
+
+getIBAN(32,"subscription")
+
+# old function, redundant as bank notes are already in the system
 def addbanknote(banknote):
 
     '''
@@ -82,8 +105,10 @@ class Member:
         print "Member %s added %s months and is a member until x" % (self.name, months)
 
 
+
+
 banknote = [
     ["1-1-2015", "Erwin", "30","Lidgeld Erwin"],
     ["1-1-2015", "Bart", "20","Lidgeld Bart"]
 ]
-addbanknote(banknote)
+# addbanknote(banknote)
