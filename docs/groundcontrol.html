@@ -11,7 +11,19 @@
 
     <h2>Interaction: SPB vs. Gatekeeper</h2>
 
-    <p>There are two ways in which SPB and Gatekeeper work together.</p>
+    <p>There are two ways in which SPB and Gatekeeper work together:
+    <ol>
+        <li>SPB provides the whitelist file for Gatekeeper.<br>
+            The SPB API provides a rest call that sends a properly formatted whitelist file in its
+            response. On the gatekeeper server, a cron job is configured that pulls this whitelist file
+            from Gatekeeper at regular intervals (e.g. every 20 minutes). Gatekeeper will automatically
+            reload this whitelist file when it detects a change.<br>
+            If SPB is not accessible, the cron job will not update the whitelist file, and Gatekeeper
+            will continue to use the last whitelist file it managed to pull from SPB.</li>
+        <li>Gatekeeper sends log messages to SPB.<br>
+            This makes it possible to view the Gatekeeper logs through the SPB UI.</li>
+    </ol>
+    </p>
 
     <h2>API</h2>
 
