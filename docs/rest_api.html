@@ -104,5 +104,48 @@
         </div>
     </div>
 
+    <div class="module">
+        <h3 class="moduleTitle">Module: logging</h3>
+
+        <div class="moduleBody">
+            <p>This module is used to send logging to SPB. SPB serves as a central logging server:
+            the log data can be examined through the UI.</p>
+
+            <table class="tbl">
+                <tr>
+                    <td>URL: <tt>/brain/logs/from/&lt;string:from_ts&gt;/to/&lt;string:to_ts&gt;</tt></td>
+                </tr>
+                <tr>
+                    <td><p>Retrieve the logs starting from <tt>from_ts</tt> until <tt>to_ts</tt></p>
+                        <p>Example response:</p>
+<pre>
+{
+  "logEntries": [
+    {
+      "attribute": "mode",
+      "message": "Gatekeeper is in PUBLIC mode",
+      "system": "gatekeeper",
+      "timestamp": "2015-11-12 19:31:53"
+    },
+    [...]
+}
+</pre>
+                    </td>
+                </tr>
+                <tr>
+                    <td>URL: <tt>/brain/logs/add/&lt;string:system&gt;/&lt;string:attribute&gt;/&lt;string:message&gt;</tt></td>
+                </tr>
+                <tr>
+                    <td><p>Send a log message to SPB to be stored in the database. The message has three parts:
+                    <ol>
+                        <li><b>system</b> this is the name of the originating system, e.g. <tt>gatekeeper</tt></li>
+                        <li><b>attribute</b>< this is a qualifier that can be used to identify a subsystem, e.g. <tt>init</tt>, <tt>mode</tt> or <tt>event</tt>/li>
+                        <li><b>message</b> this is the actual message to be stored.</li>
+                    </ol></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
 </body>
 </html>
