@@ -13,3 +13,11 @@ class LogDataStore(BasicDataStore):
         self.runinsert(
             """INSERT INTO smarterspacebrain.logs (timestamp, system, attribute, message) VALUES (%s, %s, %s, %s)""",
             (datetime.now(), system, attr, msg))
+
+    def get_systems(self):
+        rows = self.runselect("""SELECT distinct system FROM smarterspacebrain.logs""")
+        return rows
+
+    def get_attributes_for_system(self, system):
+        rows = self.runselect("""SELECT distinct attribute FROM smarterspacebrain.logs WHERE system=%s""", (system,))
+        return rows

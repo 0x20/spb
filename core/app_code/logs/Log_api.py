@@ -27,3 +27,13 @@ def store_log(system, attribute, message):
     return "True"
 
 
+# - get all systems:
+@log_module.route('/brain/logs/systems', methods=['GET'])
+def get_systems():
+    return jsonify({'systems': storage.get_systems()})
+
+
+# - get all attributes for a system:
+@log_module.route('/brain/logs/attributes/<string:system>', methods=['GET'])
+def get_attribs_for_system(system):
+    return jsonify({'attributes': storage.get_attributes_for_system(system)})
