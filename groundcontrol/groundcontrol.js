@@ -5,8 +5,6 @@
 // generic one.
 
 // generic requires
-var SHA256 = require("crypto-js/sha256");
-
 var directives = angular.module('directives', []);
 directives.directive('datepicker', function() {
     return {
