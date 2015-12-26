@@ -48,7 +48,7 @@ var loginModule = angular.module('Login', []);
 loginModule.controller("LoginController", function ($scope, $rootScope, $http) {
         $scope.login = function () {
             $scope.dataLoading = true;
-            var responsePromise = $http.get("/brain/login/" + $scope.username + "/" + $scope.password);
+            var responsePromise = $http.get("/brain/login/" + $scope.username + "/" + CryptoJS.SHA256($scope.password).toString());
             $scope.password = '';  // clear the password field, so that it is empty after logout
             responsePromise.success(function(data, status, headers, config) {
                 if (data == "True") {
