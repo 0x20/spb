@@ -4,6 +4,7 @@ import logging
 import urllib
 from flask import Blueprint, jsonify
 from app_code.users.UsersDataStore import UsersDataStore
+import hashlib
 
 storage = UsersDataStore()
 logger = logging.getLogger('users_api')
@@ -54,5 +55,12 @@ def delete_phonenumber(id):
 @users_module.route('/brain/user/<int:id>/updatepassword/<string:username>/<string:password>', methods=['GET'])
 def set_usernamepassword(id, username, password):
     print "** set username/password for user ", id
-    storage.setusernamepassword(id, username, password)
+    storage.setusernamepassword(id, username, hashpw(password))
     return "True"
+
+def hashpw(password):
+    #the password will come in as ha sha256 password
+    #to confuse the russians the password will be rehashed as a sha512 hash. With a salt before the the password. 
+    salt = 'Rikketikketik,wiebennekik?'
+    return hashlib.sha512("%s%s"%(salt,password)).hexdigest()
+
