@@ -225,7 +225,7 @@ userModule.controller("UserController", function($scope, $http) {
 
         $scope.saveUsernamePassword = function(item) {
             $http.get("/brain/user/"  + $scope.selectedUser.id + "/updatepassword/" +
-                       $scope.selectedUser.username + "/" + $scope.selectedUser.password);
+                       $scope.selectedUser.username + "/" + CryptoJS.SHA256($scope.selectedUser.password));
         }
         $scope.loadUserList();
     } );
