@@ -5,9 +5,10 @@
         <link href="jquery-ui.min.css" rel="stylesheet" type="text/css">
         <link href="ngDialog.min.css" rel="stylesheet" type="text/css">
 
-        <script src= "sha256-min.js"></script> 
+        <script src= "sha256-min.js"></script>
         <script src= "angular-1.3.15.min.js"></script>
         <script src= "ngDialog.min.js"></script>
+
         <!--<script src="ng-file-upload.min.js"></script>-->
         <script src= "jquery-1.11.3.min.js"></script>
         <script src= "jquery-ui.min.js"></script>
@@ -67,6 +68,7 @@
             <a href="#" ng-click="logs()" class="menuItem" ng-class="logActive">Logs</a>
             <a href="#" ng-click="bank()" class="menuItem" ng-class="bankActive">Bank</a>
             <a href="#" ng-click="gatekeeper()" class="menuItem" ng-class="gatekeeperActive">Gatekeeper</a>
+            <a href="#" ng-click="flappers()" class="menuItem" ng-class="flappersActive">Flappers</a>
             <a href="#" ng-click="test()" class="menuItem" ng-class="testActive">&lt;Test&gt;</a>
             <a href="#" ng-click="logout()" class="menuItem">Logout</a>
         </nav>
@@ -321,6 +323,39 @@
                 <input type="hidden" ng-model="newSchedule.id" value="-1">
                 <button ng-click="saveSchedules()">Save</button>
             </div>
+        </div>
+      </div>
+
+      <!-- flappers panel. -->
+      <div ng-show="loggedIn==true && activePanel=='flappers'" ng-controller="FlappersController">
+        <div>
+            <div class="sectionTitle">
+              <h3>Flappers</h3>
+              <p>
+                  Enter a text (4 characters) to display on the flappers.<br>
+                  The text will be shown for 10 seconds, after that it returns to '0x20'.<br>
+                  Calibration: if the flappers are displaying the wrong thing, you can calibrate them
+                  by entering the text that is showing currently in the box and pressing 'Calibrate'.<br>
+                  (Note: the default '0x20' display is achieved by sending '@@@@' to the flappers.)
+              </p>
+                <br>
+            </div>
+            <div class="sectionList">
+                <form novalidate>
+                    <table style="width: 300pt">
+                        <tr>
+                            <td>Text:</td>
+                            <td><input type="text" ng-model="flapperText" size="4"></td>
+                            <td><button ng-click="showFlapperText()">Show</button></td>
+                        </tr>
+                        <tr>
+                            <td>Calibrate:</td>
+                            <td><input type="text" ng-model="flapperCalibrationText" size="4"></td>
+                            <td><button ng-click="calibrateFlappers()">Calibrate</button></td>
+                        </tr>
+                    </table>
+                </form>
+           </div>
         </div>
       </div>
 

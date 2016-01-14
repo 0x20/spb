@@ -79,6 +79,7 @@ menuModule.controller("MenuController", function ($scope, $rootScope) {
             delete $scope.testActive;
             delete $scope.bankActive;
             delete $scope.gatekeeperActive;
+            delete $scope.flappersActive;
         }
         $scope.logs = function() {
             $rootScope.activePanel='logs';
@@ -87,6 +88,7 @@ menuModule.controller("MenuController", function ($scope, $rootScope) {
             delete $scope.testActive;
             delete $scope.bankActive;
             delete $scope.gatekeeperActive;
+            delete $scope.flappersActive;
         }
         $scope.bank = function() {
             $rootScope.activePanel='bank';
@@ -95,6 +97,7 @@ menuModule.controller("MenuController", function ($scope, $rootScope) {
             delete $scope.userActive;
             delete $scope.gatekeeperActive;
             delete $scope.testActive;
+            delete $scope.flappersActive;
         }
         $scope.gatekeeper = function() {
             $rootScope.activePanel='gatekeeper';
@@ -103,6 +106,15 @@ menuModule.controller("MenuController", function ($scope, $rootScope) {
             delete $scope.userActive;
             delete $scope.bankActive;
             delete $scope.testActive;
+            delete $scope.flappersActive;
+        }
+        $scope.flappers = function() {
+            $rootScope.activePanel='flappers';
+            $scope.flappersActive='menuItemActive';
+            delete $scope.logActive;
+            delete $scope.userActive;
+            delete $scope.bankActive;
+            delete $scope.gatekeeperActive;
         }
         $scope.test = function() {
             $rootScope.activePanel='test';
@@ -111,6 +123,7 @@ menuModule.controller("MenuController", function ($scope, $rootScope) {
             delete $scope.userActive;
             delete $scope.bankActive;
             delete $scope.gatekeeperActive;
+            delete $scope.flappersActive;
         }
     });
 
@@ -315,6 +328,25 @@ gatekeeperModule.controller("GatekeeperController", function ($scope, $http) {
         $scope.modifySchedule();
     });
 
+// FLAPPERS
+var flappersModule = angular.module('Flappers', []);
+flappersModule.controller("FlappersController", function ($scope, $http) {
+        $scope.showFlapperText = function() {
+            var txt = $scope.flapperText.substring(0, 4);
+            var responsePromise = $http.get("/brain/flappers/msg/" + txt);
+            responsePromise.success(function(data, status, headers, config) {
+                $http.get("/brain/logs/add/flappers/msg," + txt);
+            });
+        }
+        $scope.calibrateFlappers = function() {
+            var txt = $scope.flapperCalibrationText.substring(0, 4);
+            var responsePromise = $http.get("/brain/flappers/calibrate/" + txt);
+            responsePromise.success(function(data, status, headers, config) {
+                $http.get("/brain/logs/add/flappers/calibrate," + txt);
+            });
+        }
+    });
+
 // TEST
 var testModule = angular.module('Test', []);
 testModule.controller("TestController", function ($scope, $http) {
@@ -348,5 +380,6 @@ angular.module('GroundControl', [
     'Transaction',
     //'Payment',
     'Gatekeeper',
+    'Flappers',
     'directives'
 ]);
