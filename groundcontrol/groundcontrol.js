@@ -4,6 +4,7 @@
 // is the one that worked, and also the one that seems to be the most
 // generic one.
 
+// generic requires
 var directives = angular.module('directives', []);
 directives.directive('datepicker', function() {
     return {
@@ -48,7 +49,7 @@ var loginModule = angular.module('Login', []);
 loginModule.controller("LoginController", function ($scope, $rootScope, $http) {
         $scope.login = function () {
             $scope.dataLoading = true;
-            var responsePromise = $http.get("/brain/login/" + $scope.username + "/" + $scope.password);
+            var responsePromise = $http.get("/brain/login/" + $scope.username + "/" + CryptoJS.SHA256($scope.password).toString());
             $scope.password = '';  // clear the password field, so that it is empty after logout
             responsePromise.success(function(data, status, headers, config) {
                 if (data == "True") {
@@ -225,7 +226,7 @@ userModule.controller("UserController", function($scope, $http) {
 
         $scope.saveUsernamePassword = function(item) {
             $http.get("/brain/user/"  + $scope.selectedUser.id + "/updatepassword/" +
-                       $scope.selectedUser.username + "/" + $scope.selectedUser.password);
+                       $scope.selectedUser.username + "/" + CryptoJS.SHA256($scope.selectedUser.password));
         }
         $scope.loadUserList();
     } );

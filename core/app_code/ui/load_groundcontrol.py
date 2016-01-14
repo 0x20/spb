@@ -58,6 +58,10 @@ def groundcontrol_jquery_code():
 def groundcontrol_jquery_min_code():
     return groundcontrol_app.send_static_file('jquery-1.11.3.min.js')
 
+@groundcontrol_app.route('/groundcontrol/sha256-min.js')
+def groundcontrol_sha256_min_code():
+    return groundcontrol_app.send_static_file('sha256-min.js')
+
 @groundcontrol_app.route('/groundcontrol/images/ui-bg_gloss-wave_35_8d8d8d_500x100.png')
 def groundcontrol_jquery_image1():
     return groundcontrol_app.send_static_file('images/ui-bg_gloss-wave_35_8d8d8d_500x100.png')
