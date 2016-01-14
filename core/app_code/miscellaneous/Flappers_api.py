@@ -9,8 +9,8 @@ logger = logging.getLogger('flappers_api')
 
 flappers_module = Blueprint('flappers', __name__)
 
-# - check a password
-@flappers_module.route('/brain/flappers/<string:text>', methods=['GET'])
+# - Show message on the flappers
+@flappers_module.route('/brain/flappers/msg/<string:text>', methods=['GET'])
 def send_to_flappers(text):
     txt = text[:4]
     print "** send to flappers ", txt
@@ -21,4 +21,14 @@ def send_to_flappers(text):
     nc.close()
     return "True"
 
+
+# - Show message on the flappers
+@flappers_module.route('/brain/flappers/calibrate/<string:text>', methods=['GET'])
+def calibrate_flappers(text):
+    txt = text[:4]
+    print "** calibrate flappers ", txt
+    nc = Netcat('172.22.32.124', 1337)
+    nc.write('$iread ' + txt + '\n')
+    nc.close()
+    return "True"
 
