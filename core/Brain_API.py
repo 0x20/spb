@@ -24,6 +24,7 @@ from app_code.users.Users_api import users_module
 from app_code.stock.Stock_api import stock_module
 #from app_code.miscellaneous.payment_api import payment_module
 from app_code.banktransactions import BankTransactionLoader
+from app_code.miscellaneous.Flappers_api import flappers_module
 
 # -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 # The application consists of 2 parts:
@@ -42,6 +43,7 @@ logger = logging.getLogger('brainapi')
 
 # Attach Flask blueprints for Brain API modules
 app.register_blueprint(access_module)
+app.register_blueprint(flappers_module)
 app.register_blueprint(log_module)
 app.register_blueprint(login_module)
 app.register_blueprint(transactions_module)
