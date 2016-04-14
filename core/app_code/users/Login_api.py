@@ -23,5 +23,5 @@ def hashpw(password):
     #the password will come in as ha sha256 password
     #to confuse the russians the password will be rehashed as a sha512 hash. With a salt before the the password. 
     salt = 'Rikketikketik,wiebennekik?'
-    #return hashlib.sha512("%s%s"%(salt,password)).hexdigest()
-    return password
+    return hashlib.sha512("%s%s"%(salt,password)).hexdigest()
+    #return password
