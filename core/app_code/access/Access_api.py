@@ -47,4 +47,8 @@ def get_all_badgenumbers():
     logger.info("** Returning list of badge numbers")
     return '\n'.join(storage.getbadgenumbers())
 
-
+@access_module.route('/brain/access/badgereaderwhitelistfile', methods=['GET'])
+@returns_text
+def get_badgereader_whitelist():
+    logger.info("** Returning badgereader whitelist")
+    return '\n'.join(storage.get_badgereader_whitelist())

@@ -20,6 +20,15 @@ class AccessDataStore(BasicDataStore):
             numbers.append(row['badgenumber'])
         return numbers
 
+    def get_badgereader_whitelist(self):
+        badgenos = self.runselect(
+            """SELECT bn.badgenumber, u.firstname, u.lastname FROM smarterspacebrain.badgenumbers bn, smarterspacebrain.user u WHERE bn.user_id=u.id AND u.member=true""")
+        lines = []
+        for badgeno in badgenos:
+            bn = badgeno['badgenumber']
+            lines.append('%s %s %s' % (badgeno['badgenumber'], badgeno['firstname'], badgeno['lastname']))
+        return lines
+
     def get_gatekeeper_schedules(self):
         return self.runselect("""SELECT id, day, starttime, endtime FROM smarterspacebrain.gatekeeperschedules ORDER BY day, starttime""", [])
 
