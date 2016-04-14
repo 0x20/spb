@@ -180,6 +180,7 @@ userModule.controller("UserController", function($scope, $http) {
                                             $scope.selectedUser.id + "/" +
                                             $scope.selectedUser.firstname + "/" +
                                             $scope.selectedUser.lastname + "/" +
+                                            $scope.selectedUser.nick + "/" +
                                             $scope.selectedUser.member);
             responsePromise.success(function(data, status, headers, config) {
                 $scope.selectUser($scope.selectedUser);  // reload user details & refresh screen

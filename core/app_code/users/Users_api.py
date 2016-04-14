@@ -24,10 +24,10 @@ def get_phonenumbers_for_user(user_id):
     return jsonify({'phonenumbers': storage.getphonenumbers(user_id)})
 
 # - update an existing user
-@users_module.route('/brain/user/update/<string:id>/<string:firstname>/<string:lastname>/<any(true,false):member>', methods=['GET'])
-def update_user(id, firstname, lastname, member):
-    print "** update user data for: ", firstname, " ", lastname
-    storage.updateuser(id, urllib.unquote(firstname), urllib.unquote(lastname), member)
+@users_module.route('/brain/user/update/<string:id>/<string:firstname>/<string:lastname>/<string:nickname>/<any(true,false):member>', methods=['GET'])
+def update_user(id, firstname, lastname, nickname, member):
+    print "** update user data for: ", firstname, " ", lastname, " (", nickname , ")"
+    storage.updateuser(id, urllib.unquote(firstname), urllib.unquote(lastname), urllib.unquote(nickname), member)
     return "True"
 
 # - update an existing user
