@@ -249,7 +249,12 @@
             <column name="memberType" type="text" />
         </addColumn>
     </changeSet>
-    
+    <changeSet id="18" author="jorisvanlooveren">
+        <addColumn tableName="user">
+            <column name="nick" type="text" />
+        </addColumn>
+    </changeSet>
+
     
 
 </databaseChangeLog>
