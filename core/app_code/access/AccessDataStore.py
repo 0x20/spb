@@ -16,6 +16,8 @@ class AccessDataStore(BasicDataStore):
         numbers = []
         rows = self.runselect(
             """SELECT bn.badgenumber FROM smarterspacebrain.badgenumbers bn, smarterspacebrain.user u WHERE bn.user_id=u.id AND u.member=true""")
+        for row in rows:
+            numbers.append(row['badgenumber'])
         return numbers
 
     def get_gatekeeper_schedules(self):
