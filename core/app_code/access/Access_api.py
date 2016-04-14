@@ -42,6 +42,7 @@ def get_whitelist():
 
 # - list of badges that are allowed to use open the Space door
 @access_module.route('/brain/access/badgenumbers/all', methods=['GET'])
+@returns_text
 def get_all_badgenumbers():
     logger.info("** Returning list of badge numbers")
     return '\n'.join(storage.getbadgenumbers())
